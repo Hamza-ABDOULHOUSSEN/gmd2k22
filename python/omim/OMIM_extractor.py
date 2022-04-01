@@ -1,7 +1,7 @@
 import pandas as pd
 
 def main():
-    omim = pd.read_csv("../OMIM/omim_onto.csv", header=0)
+    omim = pd.read_csv("../../OMIM/omim_onto.csv", header=0)
     print(omim["Class ID"][0])
     print(omim.columns)
     First_row = []

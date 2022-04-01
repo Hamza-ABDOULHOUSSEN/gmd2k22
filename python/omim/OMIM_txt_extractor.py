@@ -1,6 +1,6 @@
 
 def main():
-    omim = open("../OMIM/omim.txt", "r", encoding="utf-8")
+    omim = open("../../OMIM/omim.txt", "r", encoding="utf-8")
     output = ""
 
     lines = omim.readlines()
