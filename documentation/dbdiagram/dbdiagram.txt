@@ -1,12 +1,33 @@
-// Creating tables
 Table OMIM_CSV as o_c {
-  Class_ID int [pk, increment] // auto-increment
-  preferred_Label varchar
-  Synonyms noidea
-  Definitions noidea
-  Obsolete  bool
-  CUI id
-  Semantic_Types noidea
-  Parents noidea
+  CUI varchar(8)
+  Class_ID link
 }
 
+Table DRUG_BANK as d_b {
+  DB_ID varchar(7)
+  name string
+  indication string
+  toxicity string
+  atc_codes list[string]
+}
+
+Table HPO_OBO as h_o {
+  id varchar(10)
+  name string
+}
+
+Table HPO_ANNOTATION as h_a {
+  disease_id varchar
+  sign_id varchar
+}
+
+Table Schema_global {
+  Maladie o_c
+  Symptome h_o
+  Medicament d_b
+  Effet_secondaire h_o
+}
+
+Ref: "OMIM_CSV"."CUI" < "HPO_ANNOTATION"."disease_id"
+
+Ref: "HPO_ANNOTATION"."sign_id" < "HPO_OBO"."id"
