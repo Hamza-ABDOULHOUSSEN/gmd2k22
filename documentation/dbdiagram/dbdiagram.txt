@@ -3,6 +3,16 @@ Table OMIM_CSV as o_c {
   Class_ID link
 }
 
+Table OMIM_TXT as o_t {
+  FIELD_NO varchar
+  FIELD_TI varchar
+  FIELD_TX varchar
+  FIELD_RF varchar
+  FIELD_CD varchar
+  FIELD_ED varchar
+}
+
+
 Table DRUG_BANK as d_b {
   DB_ID varchar(7)
   name string
@@ -21,6 +31,45 @@ Table HPO_ANNOTATION as h_a {
   sign_id varchar
 }
 
+Table SIDER_MEDDRA as s_m {
+  cui noidea
+  concept_type noidea
+  meddra_id noidea
+  label noidea
+}
+
+Table SIDER_MEDDRA_ALL_INDICATIONS as s_mai {
+  stitch_compound_id noidea
+  cui noidea
+  method_of_detection noidea
+  concept_name noidea
+  meddra_concept_type noidea
+  cui_of_meddra_term noidea
+  meddra_concept_name noidea
+}
+
+Table SIDER_MEDDRA_ALL_SE as s_mas {
+  stitch_compound_id1 noidea
+  stitch_compound_id2 noidea
+  cui noidea
+  meddra_concept_type noidea
+  cui_of_meddra_term noidea
+  side_effect_name noidea
+}
+
+Table SIDER_MEDDRA_FREQ {
+  stitch_compound_id1 noidea
+  stitch_compound_id2 noidea
+  cui noidea
+  placebo noidea
+  frequency_description noidea
+  freq_lower_bound noidea
+  freq_upper_bound noidea
+  meddra_concept_type noidea
+  meddra_concept_id noidea
+  side_effect_name noidea
+}
+
 Table Schema_global {
   Maladie o_c
   Symptome h_o
@@ -28,6 +77,19 @@ Table Schema_global {
   Effet_secondaire h_o
 }
 
-Ref: "OMIM_CSV"."CUI" < "HPO_ANNOTATION"."disease_id"
+Ref: "OMIM_CSV"."Class_ID" - "OMIM_TXT"."FIELD_NO"
 
-Ref: "HPO_ANNOTATION"."sign_id" < "HPO_OBO"."id"
+Ref: "OMIM_CSV"."CUI" - "HPO_ANNOTATION"."disease_id"
+
+Ref: "HPO_ANNOTATION"."sign_id" - "HPO_OBO"."id"
+
+Ref: "SIDER_MEDDRA"."cui" - "SIDER_MEDDRA_ALL_INDICATIONS"."cui"
+Ref: "SIDER_MEDDRA"."cui" - "SIDER_MEDDRA_ALL_SE"."cui"
+Ref: "SIDER_MEDDRA"."cui" - "SIDER_MEDDRA_FREQ"."cui"
+
+Ref: "SIDER_MEDDRA_ALL_SE"."stitch_compound_id1" - "SIDER_MEDDRA_FREQ"."stitch_compound_id1"
+Ref: "SIDER_MEDDRA_ALL_SE"."stitch_compound_id2" - "SIDER_MEDDRA_FREQ"."stitch_compound_id2"
+
+Ref: "SIDER_MEDDRA"."concept_type" - "SIDER_MEDDRA_ALL_INDICATIONS"."meddra_concept_type"
+Ref: "SIDER_MEDDRA"."concept_type" - "SIDER_MEDDRA_ALL_SE"."meddra_concept_type"
+Ref: "SIDER_MEDDRA"."concept_type" - "SIDER_MEDDRA_FREQ"."meddra_concept_type"
