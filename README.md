@@ -1,3 +1,13 @@
 # gmd2k22
 
-Dépôt du projet de Gestion des Masses de Données 2022
+## Team members
+- ABDOULHOUSSEN Hamza
+- ALLOUCHE Kamal
+- Boulechfar Sami
+
+## Work subject
+[Work subject](Sujet.pdf)
+
+## Usefull links
+[pandas documentation](https://pandas.pydata.org/docs/)  
+[omim website](https://www.omim.org/)
