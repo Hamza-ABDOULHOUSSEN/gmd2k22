@@ -1,10 +1,19 @@
 # gmd2k22
 
-Dépôt du projet de Gestion des Masses de Données 2022
+## Team members
+- ABDOULHOUSSEN Hamza
+- ALLOUCHE Kamal
+- Boulechfar Sami
 
-#Source de "drugbank.xml" :  https://go.drugbank.com/releases/latest
-#Source de "hpo_annotations.sqlite" :  
-#Source de "hpo.obo" :  
-#Source de "omim_onto.csv" :  
-#Source de "omim.txt" :  
-#Source de "br08303.keg" :  
+## Work subject
+[Work subject](Sujet.pdf)
+
+## Usefull links
+[pandas documentation](https://pandas.pydata.org/docs/)  
+[omim website](https://www.omim.org/)  
+[drugbank.xml](https://go.drugbank.com/releases/latest)  
+
+## links to search
+hpo_annotations.sqlite :  
+hpo.obo :  
+br08303.keg :  
