@@ -13,6 +13,9 @@
 [omim website](https://www.omim.org/)  
 [drugbank.xml](https://go.drugbank.com/releases/latest)  
 
+## link to the diagram
+[Diagram](https://dbdiagram.io/d/62470edfd043196e39dbc1bd)
+
 ## links to search
 hpo_annotations.sqlite :  
 hpo.obo :  

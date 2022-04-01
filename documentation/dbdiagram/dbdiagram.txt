@@ -1,0 +1,12 @@
+// Creating tables
+Table OMIM_CSV as o_c {
+  Class_ID int [pk, increment] // auto-increment
+  preferred_Label varchar
+  Synonyms noidea
+  Definitions noidea
+  Obsolete  bool
+  CUI id
+  Semantic_Types noidea
+  Parents noidea
+}
+
