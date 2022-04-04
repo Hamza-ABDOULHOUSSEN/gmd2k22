@@ -8,3 +8,7 @@
 # Files
 STITCH_ATC/chemical.sources.v5.0.tsv.gz
 STITCH_ATC/chemical.sources.v5.0.tsv
+
+# Drugbank_index (Lucene)
+Drugbank_index/out
+Drugbank_index/Drugbank_index.iml
