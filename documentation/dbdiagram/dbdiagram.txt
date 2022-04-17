@@ -14,11 +14,13 @@ Table OMIM_TXT as o_t {
 
 
 Table DRUG_BANK as d_b {
-  DB_ID varchar(7)
-  name string
-  indication string
-  toxicity string
-  atc_codes list[string]
+  id text
+  name text
+  description text
+  indication text
+  toxicity text
+  synonyms text
+  atc_code text
 }
 
 Table HPO_OBO as h_o {
