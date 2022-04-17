@@ -16,14 +16,14 @@ import java.util.Date;
 public class Request {
 
     public static void Search(String[] fields, String userQuery) throws IOException, ParseException {
-        String index = "drug_bank_index";
+        final String INDEX = "drug_bank_index";
 
-        IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(index).toPath()));
+        IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(INDEX).toPath()));
         IndexSearcher searcher = new IndexSearcher(reader);
         Analyzer analyzer = new StandardAnalyzer();
         Query query = new MultiFieldQueryParser(fields, analyzer).parse(userQuery);
 
-        System.out.println("Searching for: " + userQuery);
+        //System.out.println("Searching for: " + userQuery);
         int hitsPerPage = 10;
         TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, 10*hitsPerPage);
 
@@ -35,41 +35,19 @@ public class Request {
         int numTotalHits = collector.getTotalHits();
         ScoreDoc[] results = collector.topDocs().scoreDocs;
         // display results
-        System.out.println("Found " + numTotalHits + " hits in " + (end.getTime() - start.getTime()) + " milliseconds");
+        //System.out.println("Found " + numTotalHits + " hits in " + (end.getTime() - start.getTime()) + " milliseconds");
         for (int i = 0; i < results.length; ++i) {
             int docId = results[i].doc;
             Document doc = searcher.doc(docId);
-            System.out.println((i + 1) + ". " + doc.get("id") + ", generic name = " + doc.get("Generic_Name"));
+            System.out.println(doc.get("id")+"," +doc.get("name")+"," +doc.get("description")+"," +doc.get("indication")+"," +doc.get("toxicity")+"," +doc.get("synonyms")+"," +doc.get("atc_code"));
         }
     }
 
     public static void main(String[] args) throws Exception {
 
-        String[] fields;
-        String userQuery;
+        String[] fields = new String[]{"id", "name", "description", "indication", "toxicity", "synonyms", "atc_code"};
 
-        // Question 4
-        System.out.println("\n=========================== Question 4 ===========================\n");
-
-        //fields = new String[]{"Generic_Name", "Synonyms", "Brand_Names"};
-        fields = new String[]{"Generic_Name", "Synonyms", "Brand_Names", "Indication"};
-        userQuery = "aspirin";
-
-        Search(fields, userQuery);
-
-        System.out.println("\n=========================== Question 5 ===========================\n");
-
-        //fields = new String[]{"description", "indication"};
-        fields = new String[]{"Generic_Name", "Synonyms", "Brand_Names", "Indication"};
-        userQuery = "diabetes";
-
-        Search(fields, userQuery);
-
-        System.out.println("\n=========================== Question 6 ===========================\n");
-
-        //fields = new String[]{"drugInteractions"};
-        fields = new String[]{"Generic_Name", "Synonyms", "Brand_Names", "Indication"};
-        userQuery = "mercaptopurine";
+        String userQuery = args[0];
 
         Search(fields, userQuery);
 

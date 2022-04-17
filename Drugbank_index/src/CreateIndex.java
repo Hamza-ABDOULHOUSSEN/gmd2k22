@@ -76,93 +76,113 @@ public class CreateIndex {
                 String line;
                 //initialization
                 String id = "";
-                String genericName = "";
+                String name = "";
                 String synonyms = "";
-                String brandNames = "";
                 String description = "";
                 String indication = "";
-                String pharmacology = "";
-                String drugInteractions = "";
+                String toxicity = "";
+                String atccode = "";
+
                 while ((line = br.readLine()) != null) {
                     // new drug
-                    if (line.startsWith("#BEGIN_DRUGCARD ")) {
-                        String[] fields = line.split(" ");
-                        id = fields[1];
-                    }
-                    if (line.equals("# Generic_Name:")) {
-                        if ((line = br.readLine()) != null)
-                            genericName = line;
-                    }
-                    if (line.equals("# Synonyms:")) {
-                        while ((line = br.readLine()) != null) {
-                            if (line.equals("")) {
-                                break;
-                            } else {
-                                synonyms += line + " ";
-                            }
+                    if (line.startsWith("  <drugbank-id primary=\"true\">")) {
+                        String[] fields = line.split("  <drugbank-id primary=\"true\">");
+                        fields = fields[1].split("</drugbank-id>");
+                        id = fields[0];
+                        if (eltCount==0) {
+                            System.out.println("id : " + id); ////////////////////////////////////////////
                         }
                     }
-                    if (line.equals("# Brand_Names:")) {
-                        while ((line = br.readLine()) != null) {
-                            if (line.equals("")) {
-                                break;
-                            } else {
-                                brandNames += line + " ";
-                            }
+
+                    if (line.startsWith("  <name>")) {
+                        String[] fields = line.split("  <name>");
+                        fields = fields[1].split("</name>");
+                        name = fields[0];
+                        if (eltCount==0) {
+                            System.out.println("name : " + name); ////////////////////////////////////////////
                         }
                     }
-                    if (line.equals("# Description:")) {
-                        if ((line = br.readLine()) != null)
-                            description = line;
-                    }
-                    if (line.equals("# Indication:")) {
-                        if ((line = br.readLine()) != null)
-                            indication = line;
-                    }
-                    if (line.equals("# Pharmacology:")) {
-                        if ((line = br.readLine()) != null)
-                            pharmacology = line;
-                    }
-                    if (line.equals("# Drug_Interactions:")) {
-                        while ((line = br.readLine()) != null) {
-                            if (line.equals("")) {
-                                break;
-                            } else {
-                                drugInteractions += line + " ";
-                            }
+
+                    if (line.startsWith("  <description>")) {
+                        String[] fields = line.split("  <description>");
+                        fields = fields[1].split("</description>");
+                        description = fields[0];
+                        if (eltCount==0) {
+                            System.out.println("description : " + description); ////////////////////////////////////////////
                         }
                     }
-                    if (line.startsWith("#END_DRUGCARD ")) {
+
+                    if (line.startsWith("  <indication>")) {
+                        String[] fields = line.split("  <indication>");
+                        fields = fields[1].split("</indication>");
+                        indication = fields[0];
+                        if (eltCount==0) {
+                            System.out.println("indication : " + indication); ////////////////////////////////////////////
+                        }
+                    }
+
+                    if (line.startsWith("  <toxicity>")) {
+                        String[] fields = line.split("  <toxicity>");
+                        fields = fields[1].split("</toxicity>");
+                        toxicity = fields[0];
+                        if (eltCount==0) {
+                            System.out.println("toxicity : " + toxicity); ////////////////////////////////////////////
+                        }
+                    }
+
+                    if (line.startsWith("  <synonyms>")) {
+                        while ((line = br.readLine()) != null) {
+                            if (line.startsWith("  </synonyms>")) {
+                                break;
+                            } else {
+                                String[] fields = line.split(">");
+                                fields = fields[1].split("<");
+                                synonyms = synonyms + "," + fields[0];
+                            }
+                        }
+                        synonyms = synonyms.substring(1);
+                        if (eltCount==0) {
+                            System.out.println("synonyms : " + synonyms); ////////////////////////////////////////////
+                        }
+                    }
+
+                    if (line.startsWith("    <atc-code")) {
+                        String[] fields = line.split("\"");
+                        atccode = fields[1];
+                        if (eltCount==0) {
+                            System.out.println("atc_code : " + atccode); ////////////////////////////////////////////
+                        }
+                    }
+
+                    if (line.startsWith("</drug>")) {
                         //write the index
                         // make a new, empty document
                         Document doc = new Document();
-                        doc.add(new StoredField("id", id)); // stored not indexed
-                        doc.add(new TextField("Generic_Name", genericName.toLowerCase(), Field.Store.YES)); // indexed and stored
-                        doc.add(new TextField("Synonyms", synonyms, Field.Store.NO)); // indexed
-                        doc.add(new TextField("Brand_Names", brandNames, Field.Store.NO)); // indexed
-                        doc.add(new TextField("Description", description, Field.Store.NO)); // indexed
-                        doc.add(new TextField("Indication", indication, Field.Store.NO)); // indexed
-                        doc.add(new TextField("Pharmacology", pharmacology, Field.Store.NO)); // indexed
-                        doc.add(new TextField("Drug_Interactions", drugInteractions, Field.Store.NO)); // indexed
+                        doc.add(new TextField("id", id, Field.Store.YES));
+                        doc.add(new TextField("name", name.toLowerCase(), Field.Store.YES));
+                        doc.add(new TextField("synonyms", synonyms, Field.Store.YES));
+                        doc.add(new TextField("description", description, Field.Store.YES));
+                        doc.add(new TextField("indication", indication, Field.Store.YES));
+                        doc.add(new TextField("toxicity", toxicity, Field.Store.YES));
+                        doc.add(new TextField("atc_code", atccode, Field.Store.YES));
 
                         if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
-                            System.out.println("adding element with id " + id);
+                            //System.out.println("adding element with id " + id);
                             writer.addDocument(doc);
                         } else {
-                            System.out.println("updating " + file);
+                            //System.out.println("updating " + file);
                             writer.updateDocument(new Term("path", file.getPath()), doc);
                         }
 
                         eltCount++;
                         //clean values
                         id = "";
-                        genericName = "";
+                        name = "";
                         synonyms = "";
-                        brandNames = "";
                         description = "";
                         indication = "";
-                        pharmacology = "";
-                        drugInteractions = "";
+                        toxicity = "";
+                        atccode = "";
                     }
                 }
 
