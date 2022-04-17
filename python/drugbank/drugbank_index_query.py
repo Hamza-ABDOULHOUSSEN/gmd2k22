@@ -4,13 +4,13 @@ import subprocess
 
 BASE_PATH = os.getcwd()   #python folder
 
-def search(query):
+def drugbank_search(query):
     content = []
 
-    os.chdir("./../Drugbank_index")
+    os.chdir("./../java_lucene_index")
 
     #process = subprocess.Popen(['ls'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    process = subprocess.Popen("./launch.sh "+query, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen("./launch.sh drugbank "+query, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
     stdout = stdout.decode("utf-8")
     stderr = stderr.decode("utf-8")
@@ -34,7 +34,7 @@ def main():
         query = sys.argv[1]
         query = f'"{query}"'
 
-    content = search(query)
+    content = drugbank_search(query)
     n = len(content)
 
     print(f"result : {n}")

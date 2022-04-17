@@ -1,9 +1,10 @@
-# Drugbank index
+# Lucene Index
 
 ## Dependencies
 Lucene dependencies
 
-## Fields
+## Drugbank
+### Fields
 - id
 - name
 - description
@@ -12,7 +13,7 @@ Lucene dependencies
 - synonyms
 - atc_code
 
-## Queries
+### Queries
 example of queries
 ```
 id : DB00001
@@ -30,12 +31,12 @@ status:[400 TO *]
 name : lepirudin AND (id : DB00001 OR id : DB00002)
 ```
 
-## Bash script launcher
+### Bash script launcher
 ```
-./launch.sh <query>
+./launch.sh drugbank <query>
 ```
 
 ex :
 ```
-./launch.sh "id : DB00001"
+./launch.sh drugbank "id : DB00001"
 ```
