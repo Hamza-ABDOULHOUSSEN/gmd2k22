@@ -6,5 +6,19 @@
 *.idea
 
 # Files
-STITCH_ATC/chemical.sources.v5.0.tsv.gz
-STITCH_ATC/chemical.sources.v5.0.tsv
+data/STITCH_ATC/chemical.sources.v5.0.tsv.gz
+data/STITCH_ATC/chemical.sources.v5.0.tsv
+
+# data
+# in case we change the data by mistake
+data
+
+# index
+# in case we change the index by mistake
+java_lucene_index/drug_bank_index
+
+# java_lucene_index
+java_lucene_index/java_lucene_index.iml
+
+# python
+*__pycache__
