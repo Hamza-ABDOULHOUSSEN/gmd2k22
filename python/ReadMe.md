@@ -1,12 +1,21 @@
 # Python INFO
 
 - [Python INFO](#python-info)
+  - [Root folder](#root-folder)
   - [Mysql dependencies](#mysql-dependencies)
   - [Requirements](#requirements)
+  - [Test](#test)
   - [drugbank package](#drugbank-package)
     - [search](#search)
   - [omim package](#omim-package)
   - [sider package](#sider-package)
+  - [stitch package](#stitch-package)
+
+
+## Root folder
+The root folder is this one : `python`  
+The commands should be executed from this folder
+
 
 
 ## Mysql dependencies
@@ -24,6 +33,24 @@ Python requirements are in `requirements.txt`
 ```
 pip install -r requirements.txt
 ```
+
+## Test
+The folder contains a package `test` for tests made with pytest.
+
+To run the tests
+```
+pytest
+```
+
+To run a specific test
+```
+pytest <file>
+```
+ex
+```
+pytest test/test_drugbank_index.py
+```
+
 
 ## drugbank package
 
@@ -62,3 +89,7 @@ extract omim attributes
 get sider tables and columns
 
 <span style="color:red">You have to use the school vpn</span>
+
+## stitch package
+Launch query in the stitch indexes
+as drugbank package
