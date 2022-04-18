@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>drugbank</title>
+
+    {% from "_formhelpers.html" import render_field %}
+</head>
+<body>
+
+<h1>Consultation drugbank index</h1>
+
+<section>
+    <h2>Recherche
+        <form action="/ex_drugbank_query" method="get">
+            <div class="row">
+                {{ render_field(DrugbankFormQuery.query, class="form-control") }}
+                <p><input type="submit" value="Query"></p>
+            </div>
+        </form>
+    </h2>
+</section>
+
+<section>
+    {% if query != "none" %}
+        <p>there are {{count}} results</p>
+
+        {% for res in content %}
+            <section>
+                <p>----------------------------------------</p>
+                <p>id : {{res[0]}}</p>
+                <p>name : {{res[1]}}</p>
+                <p>description : {{res[2]}}</p>
+                <p>indication : {{res[3]}}</p>
+                <p>toxicity : {{res[4]}}</p>
+                <p>synonyms : {{res[5]}}</p>
+                <p>atc_code : {{res[6]}}</p>
+            </section>
+        {% endfor %}
+    {% endif %}
+</section>
+
+
+</body>
+</html>
