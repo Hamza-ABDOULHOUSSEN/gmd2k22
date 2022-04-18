@@ -25,3 +25,5 @@ def ex_drugbank_query():
 
     return render_template("ex_drugbank_query.html", DrugbankFormQuery=DrugbankFormQuery, query=query, count=count, content=content)
 
+if __name__ == '__main__':
+    app.run()
