@@ -10,6 +10,10 @@
     - [Fields](#fields-1)
     - [Queries](#queries-1)
     - [Bash script launcher](#bash-script-launcher-1)
+  - [Stitch br08303](#stitch-br08303)
+    - [Fields](#fields-2)
+    - [Queries](#queries-2)
+    - [Bash script launcher](#bash-script-launcher-2)
 
 
 ## Dependencies
@@ -74,4 +78,28 @@ source_format : ATC
 ex :
 ```
 ./launch.sh stitch.chemical_sources "source_format : ATC"
+```
+
+## Stitch br08303
+### Fields
+- atc_code
+- drug_name
+
+### Queries
+example of queries
+```
+atc_code : B01AE02
+```
+```
+drug_name : Lepirudin
+```
+
+### Bash script launcher
+```
+./launch.sh stitch.br08303 <query>
+```
+
+ex :
+```
+./launch.sh stitch.br08303 "atc_code : B01AE02"
 ```
