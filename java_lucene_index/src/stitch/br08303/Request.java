@@ -43,7 +43,8 @@ public class Request {
         for (int i = 0; i < results.length; ++i) {
             int docId = results[i].doc;
             Document doc = searcher.doc(docId);
-            System.out.println(doc.get("atc_code")+"," + doc.get("drug_name"));
+            String sep = "#-#";
+            System.out.println(doc.get("atc_code")+sep + doc.get("drug_name"));
         }
     }
 

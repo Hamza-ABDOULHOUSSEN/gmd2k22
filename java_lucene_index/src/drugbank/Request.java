@@ -40,7 +40,8 @@ public class Request {
         for (int i = 0; i < results.length; ++i) {
             int docId = results[i].doc;
             Document doc = searcher.doc(docId);
-            System.out.println(doc.get("id")+"," +doc.get("name")+"," +doc.get("description")+"," +doc.get("indication")+"," +doc.get("toxicity")+"," +doc.get("synonyms")+"," +doc.get("atc_code"));
+            String sep = "#-#";
+            System.out.println(doc.get("id")+sep +doc.get("name")+sep +doc.get("description")+sep +doc.get("indication")+sep +doc.get("toxicity")+sep +doc.get("synonyms")+sep +doc.get("atc_code"));
         }
     }
 

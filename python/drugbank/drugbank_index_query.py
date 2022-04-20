@@ -18,7 +18,7 @@ def drugbank_search(query):
     lines = stdout.splitlines()
 
     for line in lines:
-        table = line.split(',')
+        table = line.split('#-#')
         content.append(table)
 
     os.chdir(BASE_PATH)
