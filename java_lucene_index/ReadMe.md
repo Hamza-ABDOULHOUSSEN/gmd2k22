@@ -14,6 +14,10 @@
     - [Fields](#fields-2)
     - [Queries](#queries-2)
     - [Bash script launcher](#bash-script-launcher-2)
+  - [Hpo](#hpo)
+    - [Fields](#fields-3)
+    - [Queries](#queries-3)
+    - [Bash script launcher](#bash-script-launcher-3)
 
 
 ## Dependencies
@@ -102,4 +106,30 @@ drug_name : Lepirudin
 ex :
 ```
 ./launch.sh stitch.br08303 "atc_code : B01AE02"
+```
+
+## Hpo
+### Fields
+- hpo_id
+- symptom
+- synonyms
+- is_a
+
+### Queries
+example of queries
+```
+hpo_id : HP_0000045
+```
+```
+symptom: Abnormality of the scrotum
+```
+
+### Bash script launcher
+```
+./launch.sh hpo <query>
+```
+
+ex :
+```
+./launch.sh hpo "hpo_id : HP_0000045"
 ```
