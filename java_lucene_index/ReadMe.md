@@ -18,6 +18,10 @@
     - [Fields](#fields-3)
     - [Queries](#queries-3)
     - [Bash script launcher](#bash-script-launcher-3)
+  - [Omim](#omim)
+    - [Fields](#fields-4)
+    - [Queries](#queries-4)
+    - [Bash script launcher](#bash-script-launcher-4)
 
 
 ## Dependencies
@@ -132,4 +136,30 @@ symptom: Abnormality of the scrotum
 ex :
 ```
 ./launch.sh hpo "hpo_id : HP_0000045"
+```
+
+## Omim
+### Fields
+- omim_id
+- field0
+- field1
+- symptoms
+
+### Queries
+example of queries
+```
+omim_id : 100300
+```
+```
+field0 : head and neck
+```
+
+### Bash script launcher
+```
+./launch.sh omim <query>
+```
+
+ex :
+```
+./launch.sh omim "omim_id : 100300"
 ```
