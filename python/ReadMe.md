@@ -51,6 +51,23 @@ ex
 pytest test/test_drugbank_index.py
 ```
 
+## Test script
+We are making some script on files to have information and make tests  
+  
+Ex :
+```python
+f = open("hpo.obo", "r")
+lines = f.readlines()
+c = 0
+for line in lines:
+    a += 1
+    if line=="[Term]\n":
+        c+=1
+f.close()
+print(c)
+
+## result : 12299
+```
 
 ## drugbank package
 
