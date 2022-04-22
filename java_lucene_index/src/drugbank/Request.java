@@ -2,11 +2,13 @@ package drugbank;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.synonym.SynonymMap;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.surround.parser.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.FSDirectory;
 
@@ -22,7 +24,9 @@ public class Request {
         IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(INDEX).toPath()));
         IndexSearcher searcher = new IndexSearcher(reader);
         Analyzer analyzer = new StandardAnalyzer();
-        Query query = new MultiFieldQueryParser(fields, analyzer).parse(userQuery);
+        MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, analyzer);
+        parser.setAllowLeadingWildcard(true);
+        Query query = parser.parse(userQuery);
 
         //System.out.println("Searching for: " + userQuery);
         int hitsPerPage = 10;

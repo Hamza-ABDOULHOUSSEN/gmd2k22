@@ -161,10 +161,10 @@ public class CreateIndex {
                         Document doc = new Document();
                         doc.add(new TextField("id", id, Field.Store.YES));
                         doc.add(new TextField("name", name.toLowerCase(), Field.Store.YES));
-                        doc.add(new TextField("synonyms", synonyms, Field.Store.YES));
-                        doc.add(new TextField("description", description, Field.Store.YES));
-                        doc.add(new TextField("indication", indication, Field.Store.YES));
-                        doc.add(new TextField("toxicity", toxicity, Field.Store.YES));
+                        doc.add(new TextField("synonyms", synonyms.toLowerCase(), Field.Store.YES));
+                        doc.add(new TextField("description", description.toLowerCase(), Field.Store.YES));
+                        doc.add(new TextField("indication", indication.toLowerCase(), Field.Store.YES));
+                        doc.add(new TextField("toxicity", toxicity.toLowerCase(), Field.Store.YES));
                         doc.add(new TextField("atc_code", atccode, Field.Store.YES));
 
                         if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
