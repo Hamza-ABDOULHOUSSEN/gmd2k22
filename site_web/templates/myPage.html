@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>myPage</title>
+
+    {% from "_formhelpers.html" import render_field %}
+</head>
+<body>
+
+<h1>MyPage</h1>
+
+<section>
+    <h2>Nom du symptôme </h2>
+        <form action="/myPage" method="get">
+            <div class="row">
+                {{ render_field(DrugbankFormQuery.query, class="form-control") }}
+                <p><input type="submit" value="Query"></p>
+            </div>
+        </form>
+    </h2>
+</section>
+
+<button id="button1" type="button" value="ooobutton1", onclick=toggle("button1")> maladie lié aux symptômes </button>
+<button id="button2" type="button" value="ooobutton2" onclick=toggle("button2")> effects secondaire des médocs  </button>
+<button id="button3" type="button" value="ooobutton3" onclick=toggle("button3")> medocs qui soigne </button>
+
+<script>
+    function toggle(id) {
+        resId = "res" + id ;
+        var x = document.getElementById(id).value;
+        if (document.getElementById(resId).innerHTML != x) {
+            document.getElementById(resId).innerHTML =  x;
+        }
+        else {
+            document.getElementById(resId).innerHTML =  "";
+        }
+    }
+</script>
+
+<section>
+    <p id="resbutton1"></p>
+    <p id="resbutton2"></p>
+    <p id="resbutton3"></p>
+
+
+    {% if query != "none" %}
+        <p>there are {{count}} results</p>
+
+            <section>
+                <p>----------------------------------------</p>
+                <p>Data from drugbank :</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Id </th>
+                            <th> Name </th>
+                            <th> Description </th>
+                            <th> Indication </th>
+                            <th> Toxicity </th>
+                            <th> Synonyms </th>
+                            <th> Atc_code </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                            {% for res in content %}
+                            <tr>
+                                <td>{{res[0]}}</td>
+                                <td>{{res[1]}}</td>
+                                <td>{{res[2]}}</td>
+                                <td>{{res[3]}}</td>
+                                <td>{{res[4]}}</td>
+                                <td>{{res[5]}}</td>
+                                <td>{{res[6]}}</td>
+                            </tr>
+                            {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </section>
+    {% endif %}
+</section>
+
+</body>
+</html>
