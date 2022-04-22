@@ -99,8 +99,8 @@ public class CreateIndex {
                     }
 
                     Document doc = new Document();
-                    doc.add(new TextField("chemical", chemical.toLowerCase(), Field.Store.YES));
-                    doc.add(new TextField("alias", alias.toLowerCase(), Field.Store.YES));
+                    doc.add(new TextField("chemical", chemical, Field.Store.YES));
+                    doc.add(new TextField("alias", alias, Field.Store.YES));
                     doc.add(new TextField("source_format", source_format, Field.Store.YES));
                     doc.add(new TextField("source_code", source_code, Field.Store.YES));
 
