@@ -138,7 +138,7 @@ public class CreateIndex {
                         doc.add(new TextField("hpo_id", hpo_id, Field.Store.YES));
                         doc.add(new TextField("symptom", symptom.toLowerCase(), Field.Store.YES));
                         doc.add(new TextField("synonyms", synonyms.toLowerCase(), Field.Store.YES));
-                        doc.add(new TextField("is_a", is_a, Field.Store.YES));
+                        doc.add(new TextField("is_a", is_a.toLowerCase(), Field.Store.YES));
 
                         if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
                             //System.out.println("adding element with id " + id);

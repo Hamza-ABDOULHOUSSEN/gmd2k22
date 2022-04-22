@@ -103,7 +103,7 @@ public class CreateIndex {
                         //write the index
                         Document doc = new Document();
                         doc.add(new TextField("atc_code", atc_code, Field.Store.YES));
-                        doc.add(new TextField("drug_name", drug_name, Field.Store.YES));
+                        doc.add(new TextField("drug_name", drug_name.toLowerCase(), Field.Store.YES));
 
                         if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
                             //System.out.println("adding element with id " + id);
