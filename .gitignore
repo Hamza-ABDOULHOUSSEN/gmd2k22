@@ -14,8 +14,8 @@ data/STITCH_ATC/chemical.sources.v5.0.tsv
 data
 
 # index
-# in case we change the index by mistake
-java_lucene_index/drug_bank_index
+# in case we change indexes by mistake
+java_lucene_index/*_index
 
 # java_lucene_index
 java_lucene_index/java_lucene_index.iml
