@@ -28,6 +28,9 @@
 Lucene dependencies
 
 ## Drugbank
+
+10562 items
+
 ### Fields
 - id
 - name
@@ -66,6 +69,9 @@ ex :
 ```
 
 ## Stitch chemical sources
+
+5046 items (from reduced file)
+
 ### Fields
 - chemical
 - alias
@@ -89,6 +95,9 @@ ex :
 ```
 
 ## Stitch br08303
+
+12915 items
+
 ### Fields
 - atc_code
 - drug_name
@@ -113,6 +122,9 @@ ex :
 ```
 
 ## Hpo
+
+12299 items
+
 ### Fields
 - hpo_id
 - symptom
@@ -139,6 +151,9 @@ ex :
 ```
 
 ## Omim
+
+5871 items
+
 ### Fields
 - omim_id
 - field0
