@@ -29,16 +29,12 @@ public class Request {
         Query query = parser.parse(userQuery);
 
         //System.out.println("Searching for: " + userQuery);
-        int hitsPerPage = 10;
-        TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, 10*hitsPerPage);
+        TotalHitCountCollector collector = new TotalHitCountCollector();
 
         // Recherche
-        Date start = new Date();
         searcher.search(query, collector);
-        Date end = new Date();
+        ScoreDoc[] results = searcher.search(query, Math.max(1, collector.getTotalHits())).scoreDocs;
 
-        int numTotalHits = collector.getTotalHits();
-        ScoreDoc[] results = collector.topDocs().scoreDocs;
         // display results
         //System.out.println("Found " + numTotalHits + " hits in " + (end.getTime() - start.getTime()) + " milliseconds");
         for (int i = 0; i < results.length; ++i) {
