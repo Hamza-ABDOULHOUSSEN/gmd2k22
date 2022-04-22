@@ -3,17 +3,15 @@ Table OMIM_CSV as o_c {
   Class_ID link
 }
 
-Table OMIM_TXT as o_t {
-  FIELD_NO varchar
-  FIELD_TI varchar
-  FIELD_TX varchar
-  FIELD_RF varchar
-  FIELD_CD varchar
-  FIELD_ED varchar
+Table "OMIM_TXT   [INDEX]" as o_t {
+  omim_id text
+  field0 text
+  field1 text
+  symptoms text
 }
 
 
-Table DRUG_BANK as d_b {
+Table "DRUG_BANK   [INDEX]" as d_b {
   id text
   name text
   description text
@@ -23,9 +21,11 @@ Table DRUG_BANK as d_b {
   atc_code text
 }
 
-Table HPO_OBO as h_o {
-  id varchar(10)
-  name string
+Table "HPO_OBO   [INDEX]" as h_o {
+  hpo_id text
+  symptom text
+  synonyms text
+  is_a text
 }
 
 Table HPO_ANNOTATION as h_a {
@@ -72,15 +72,16 @@ Table SIDER_MEDDRA_FREQ {
   side_effect_name noidea
 }
 
-Table STIICH_BR {
-  stitch_id varchar
-  drug_label varchar
+Table "STIICH_BR   [INDEX]" {
+  atc_code text
+  drug_name text
 }
 
-Table STIICH_CS {
-  chemical varchar
-  alias varchar
-  source varchar
+Table "STIICH_CS   [INDEX]" {
+  chemical text
+  alias text
+  source_format text
+  source_code text
 }
 
 Table Schema_global {
@@ -90,11 +91,11 @@ Table Schema_global {
   Effet_secondaire h_o
 }
 
-Ref: "OMIM_CSV"."Class_ID" - "OMIM_TXT"."FIELD_NO"
+Ref: "OMIM_CSV"."Class_ID" - "OMIM_TXT   [INDEX]"."omim_id"
 
 Ref: "OMIM_CSV"."CUI" - "HPO_ANNOTATION"."disease_id"
 
-Ref: "HPO_ANNOTATION"."sign_id" - "HPO_OBO"."id"
+Ref: "HPO_ANNOTATION"."sign_id" - "HPO_OBO   [INDEX]"."hpo_id"
 
 Ref: "SIDER_MEDDRA"."cui" - "SIDER_MEDDRA_ALL_INDICATIONS"."cui"
 Ref: "SIDER_MEDDRA"."cui" - "SIDER_MEDDRA_ALL_SE"."cui"
@@ -107,4 +108,4 @@ Ref: "SIDER_MEDDRA"."concept_type" - "SIDER_MEDDRA_ALL_INDICATIONS"."meddra_conc
 Ref: "SIDER_MEDDRA"."concept_type" - "SIDER_MEDDRA_ALL_SE"."meddra_concept_type"
 Ref: "SIDER_MEDDRA"."concept_type" - "SIDER_MEDDRA_FREQ"."meddra_concept_type"
 
-Ref: "STIICH_BR"."stitch_id" - "STIICH_CS"."source"
+Ref: "STIICH_BR   [INDEX]"."atc_code" - "STIICH_CS   [INDEX]"."source_code"
