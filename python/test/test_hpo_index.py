@@ -16,4 +16,4 @@ def test_search():
         query = sys.argv[1]
         query = f'"{query}"'
 
-    assert(len(query) == 24)
+    assert(len(query) == 21)

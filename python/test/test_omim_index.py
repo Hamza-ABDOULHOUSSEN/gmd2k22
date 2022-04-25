@@ -11,4 +11,4 @@ def test_search():
         query = f'"{query}"'
 
     content = omim_search(query)
-    assert(len(content) == 1)
+    assert(len(content) == 46)
