@@ -20,7 +20,7 @@ def test_stitch_source_code_to_stitch_atc_code():
 def test_stitch_atc_code_to_drugbank():
     atc_code = 'L01XE17'
 
-    table = stitch_source_code_to_stitch_atc_code(atc_code)
+    table = stitch_atc_code_to_drugbank(atc_code)
 
     id = "DB06626"
     name = "axitinib"
@@ -30,4 +30,4 @@ def test_stitch_atc_code_to_drugbank():
     synonyms = "axitinib,axitinibum"
     atc_code = "L01XE17"
 
-    assert table == [name, description, indication, toxicity]
+    assert table == [[name, description, indication, toxicity]]
