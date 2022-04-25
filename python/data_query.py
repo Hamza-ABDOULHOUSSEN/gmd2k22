@@ -7,9 +7,16 @@ from stitch.stitch_chemical_sources_index_query import stitch_chemical_sources_s
 from stitch.stitch_br08303_index_query import stitch_br08303_search
 
 '''
-creer un output : genre
-[ [symptom, disease, drug, drug_description, score, ...] ... ]
+GLOBAL LISTS :
+disease_list = [[occurrence, disease_name]
+curing_drug_list = [[occurrence, drug_name, description, indication, toxicity, sources, lost]]
+side_effects_from_drug_list = [[occurrence, drug_name, description, indication, toxicity, sources, lost]]
 '''
+
+# GLOBAL LISTS
+disease_list = []
+curing_drug_list = []
+side_effects_from_drug_list = []
 
 # temp just to print and check values
 def printlist(output):
@@ -66,6 +73,15 @@ def search_from_symptom(symptom):
                 output.append([symptom, disease])
 
     return output
+
+def complete_search(symptom):
+
+    # correction of the input
+
+    # initiation of global lists
+    disease_list = []
+    curing_drug_list = []
+    side_effects_from_drug_list = []
 
 def main():
     REQUEST = "sepsis"
