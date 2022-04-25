@@ -19,17 +19,32 @@ def sider_to_stitch_compoundid1(id1, id2):
     idb = replace0s(id2)
     query = '"chemical : ' + ida + ' OR chemical : ' + idb + '"'
     table = stitch_chemical_sources_search(query)
-    print(table)
+    result = []
+    for i in range(len(table)) :
+        result.append(table[i][3])
+    return result
     # retourne la liste des source_code
 
 def stitch_source_code_to_stitch_atc_code(code):
+    query = '"atc_code : ' + code +'"'
     table = []
-    return table
+    table = stitch_br08303_search(query)
+    result = []
+    for i in range(len(table)) :
+        result.append(table[i][1])
+    return result
     # retourne la liste des atc_code
 
 def stitch_atc_code_to_drugbank(atc_code):
-    table = []
-    return table
+    query = '"id : ' + atc_code +'"'
+    table = drugbank_search(query)
+    result = []
+    for i in range(len(table)) :
+        result.append([table[i][1], table[i][2], table[i][3], table[i][4]])
+    print(result)
+    return result
     # retourne les listes [[name, description, ...]]
 
-sider_to_stitch_compoundid1("CID100003269","CID000005756")
+sider_to_stitch_compoundid1('CID100003269',"CID000005756")
+stitch_source_code_to_stitch_atc_code("B01AE02")
+stitch_atc_code_to_drugbank("DB00001")
