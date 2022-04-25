@@ -36,15 +36,10 @@ def stitch_source_code_to_stitch_atc_code(code):
     # retourne la liste des atc_code
 
 def stitch_atc_code_to_drugbank(atc_code):
-    query = '"id : ' + atc_code +'"'
+    query = f'"atc_code : {atc_code}"'
     table = drugbank_search(query)
     result = []
     for i in range(len(table)) :
         result.append([table[i][1], table[i][2], table[i][3], table[i][4]])
-    print(result)
     return result
     # retourne les listes [[name, description, ...]]
-
-sider_to_stitch_compoundid1('CID100003269',"CID000005756")
-stitch_source_code_to_stitch_atc_code("B01AE02")
-stitch_atc_code_to_drugbank("DB00001")
