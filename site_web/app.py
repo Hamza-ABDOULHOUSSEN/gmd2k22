@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+
 from requests import *
 import forms
 
@@ -49,19 +50,26 @@ def requete():
 
 @app.route('/test', methods = ["GET"])
 def test():
-    DrugbankFormQuery = forms.DrugbankFormQuery(request.form)
+    FormQuery = forms.FormQuery(request.form)
     arguments = request.args
 
     query = "none"
-    content = []
-    count = 0
+    disease_list, curing_drug_list, side_effects_from_drug_list = [], [], []
+    count_disease_list, count_curing_drug_list, count_side_effects_from_drug_list = 0, 0, 0
 
     if len(arguments) != 0:
         query = arguments["query"]
-        content = drugbank_query(query)
-        count = len(content)
+        disease_list, curing_drug_list, side_effects_from_drug_list = sb(query)
+        count_disease_list, count_curing_drug_list, count_side_effects_from_drug_list = len(disease_list), len(curing_drug_list), len(side_effects_from_drug_list)
 
-    return render_template("test.html", DrugbankFormQuery=DrugbankFormQuery, query=query, count=count, content=content)
+    return render_template("test.html", FormQuery=FormQuery, query=query,
+                           count_disease_list = count_disease_list,
+                           count_curing_drug_list = count_curing_drug_list,
+                           count_side_effects_from_drug_list = count_side_effects_from_drug_list,
+                           disease_list = disease_list,
+                           curing_drug_list = curing_drug_list,
+                           side_effects_from_drug_list = side_effects_from_drug_list
+                           )
 
 
 

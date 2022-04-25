@@ -248,7 +248,6 @@
 		</section>
 		<!-- Header -->
 
-
 		<section id="fh5co-hero" class="js-fullheight" style="background-image: url(static/images/drug_bg2.jpg);" data-next="yes">
 			<div class="fh5co-overlay"></div>
 			<div class="container">
@@ -264,7 +263,7 @@
 							<h2 class="animate-box">Symptoms </h2>
 							<form action="/test" method="get">
 								<div class="row">
-									{{ render_field(DrugbankFormQuery.query, class="form-control") }}
+									{{ render_field(FormQuery.query, class="form-control") }}
 									<p><input type="submit" value="Query"></p>
 								</div>
         					</form>
@@ -288,7 +287,7 @@
 					<div class="row row-bottom-padded-md">
 						<div class="col-md-6 col-md-offset-3 text-center">
 							<h2 class="fh5co-lead animate-box">Disease</h2>
-							<p class="fh5co-sub-lead animate-box"> Here are the diseases that matches your symptom. </p>
+							<p class="fh5co-sub-lead animate-box"> Here are the diseases that matchs your symptom. </p>
 						</div>
 					</div>
 					<div class="row">
@@ -300,69 +299,33 @@
 					<div class="flexslider">
 						<ul class="slides">
 							<li>
-								<p> Résultat 1ere requête : there are {{count}} results </p>
-								<table>
-									<thead>
-										<tr>
-											<th> Id </th>
-											<th> Name </th>
-											<th> Description </th>
-											<th> Indication </th>
-											<th> Toxicity </th>
-											<th> Synonyms </th>
-											<th> Atc_code </th>
-										</tr>
-									</thead>
-									<tbody>
-										{% for res in content %}
-										<tr>
-											<td>{{res[0]}}</td>
-											<td>{{res[1]}}</td>
-											<td>{{res[2]}}</td>
-											<td>{{res[3]}}</td>
-											<td>{{res[4]}}</td>
-											<td>{{res[5]}}</td>
-											<td>{{res[6]}}</td>
-										</tr>
-										{% endfor %}
-									</tbody>
+								<p> There are {{count_disease_list}} results </p>
+								{% if count_disease_list != 0 %}
+								<div style="overflow-y: scroll; height:400px">
+									<table>
+										<thead>
+											<tr>
+												<th> Disease name </th>
+												<th> occurence </th>
+												<th> Source </th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for res in disease_list %}
+											<tr>
+												<td>{{res[1]}}</td>
+												<td>{{res[0]}}</td>
+												<td>{{res[2]}}</td>
+											</tr>
+											{% endfor %}
+										</tbody>
 
-								</table>
+									</table>
+								</div>
+								{% endif %}
 							</li>
 						</ul>
 					</div>
-                <p>----------------------------------------</p>
-                <p>Data from drugbank :</p>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th> Id </th>
-                            <th> Name </th>
-                            <th> Description </th>
-                            <th> Indication </th>
-                            <th> Toxicity </th>
-                            <th> Synonyms </th>
-                            <th> Atc_code </th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                            {% for res in content %}
-                            <tr>
-                                <td>{{res[0]}}</td>
-                                <td>{{res[1]}}</td>
-                                <td>{{res[2]}}</td>
-                                <td>{{res[3]}}</td>
-                                <td>{{res[4]}}</td>
-                                <td>{{res[5]}}</td>
-                                <td>{{res[6]}}</td>
-                            </tr>
-                            {% endfor %}
-
-                    </tbody>
-
-                </table>
             </section>
 			<!-- END section Disease -->
 
@@ -370,20 +333,41 @@
 				<div class="container">
 					<div class="row text-center row-bottom-padded-md">
 						<div class="col-md-8 col-md-offset-2">
-							<figure class="fh5co-devices animate-box"><img src="static/images/img_devices.png" alt="Free HTML5 Bootstrap Template" class="img-responsive"></figure>
+							<figure class="fh5co-devices animate-box"><img src="static/images/img_devices.png" alt="" class="img-responsive"></figure>
 							<h2 class="fh5co-lead animate-box">Drugs to use</h2>
 							<p class="fh5co-sub-lead animate-box">Here are the drugs that may heal you.</p>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-8 col-md-offset-2 text-center animate-box">
-					<div class="flexslider">
-						<ul class="slides">
-							<li>
-								<p> Mettre résultat 2e requête. </p>
-							</li>
-						</ul>
-					</div>
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<p> There are {{count_curing_drug_list}} results </p>
+							{% if count_curing_drug_list != 0 %}
+							<div style="overflow-y: scroll; height:400px">
+								<table>
+									<thead>
+										<tr>
+											<th> Field1 </th>
+											<th> Field2 </th>
+											<th> Field3 </th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for res in curing_drug_list %}
+										<tr>
+											<td>{{res[1]}}</td>
+											<td>{{res[0]}}</td>
+											<td>{{res[2]}}</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+
+								</table>
+							</div>
+							{% endif %}
+						</li>
+					</ul>
 				</div>
 			</section>
 			<!-- END Section Drugs -->
@@ -393,19 +377,40 @@
 					<div class="row row-bottom-padded-sm">
 						<div class="col-md-6 col-md-offset-3 text-center">
 							<h2 class="fh5co-lead animate-box">Side effects </h2>
+							<p class="fh5co-sub-lead animate-box">Here are the drugs that might cause you this symptom.</p>
+
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2 text-center animate-box">
-							<div class="flexslider">
-								<ul class="slides">
-								   <li>
-									   <p> Mettre résultat 3e requête. </p>
-								   </li>
-								</ul>
+				</div>
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<p> There are {{count_side_effects_from_drug_list}} results </p>
+							{% if count_side_effects_from_drug_list != 0 %}
+							<div style="overflow-y: scroll; height:400px">
+								<table>
+									<thead>
+										<tr>
+											<th> Field1 </th>
+											<th> Field2 </th>
+											<th> Field3 </th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for res in side_effects_from_drug_list %}
+										<tr>
+											<td>{{res[1]}}</td>
+											<td>{{res[0]}}</td>
+											<td>{{res[2]}}</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+
+								</table>
 							</div>
-						</div>
-					</div>
+							{% endif %}
+						</li>
+					</ul>
 				</div>
 			</section>
 			<!-- END section Side Effects -->
