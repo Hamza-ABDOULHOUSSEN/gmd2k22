@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append('../python')
-from data_query import complete_search
+from data_query import *
 
 from drugbank.drugbank_index_query import *
 
