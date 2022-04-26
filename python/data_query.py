@@ -1,5 +1,7 @@
 import sqlite3
 import pandas as pd
+import time
+import sys
 
 from drugbank.drugbank_index_query import drugbank_search
 from hpo.hpo_index_query import hpo_search
@@ -77,7 +79,7 @@ def get_sider_id(symptom):
 
     return content
 
-
+## SEARCH FROM DRUGBANK
 
 ## GLOBAL SEARCH FUNCTION
 
@@ -158,6 +160,22 @@ def search_side_effects_drug_from_symptom(symptom, side_effects_from_drug_list):
 
     return side_effects_from_drug_list
 
+def search_curing_drug_from_symtom(symptom, curing_drug_list):
+    query = create_drugbank_query(symptom)
+    content_drugbank = drugbank_search(query)
+
+    for elem in content_drugbank:
+        occurrence = 1
+        drug_name = elem[1]
+        description = elem[2]
+        indication = elem[3]
+        toxicity = elem[4]
+        sources = "drugbank"
+
+        curing_drug_list.append([occurrence, drug_name, description, indication, toxicity, sources])
+
+    return curing_drug_list
+
 def complete_search(symptom):
 
     # correction of the input
@@ -169,40 +187,65 @@ def complete_search(symptom):
     side_effects_from_drug_list = []
 
     disease_list = search_disease_from_symptom(symptom, disease_list)
+    curing_drug_list = search_curing_drug_from_symtom(symptom, curing_drug_list)
     side_effects_from_drug_list = search_side_effects_drug_from_symptom(symptom, side_effects_from_drug_list)
 
     return disease_list, curing_drug_list, side_effects_from_drug_list
 
 def main():
+
     symptom = "abdominal"
 
     # correction of the input
     symptom = symptom.lower()
 
-    #stitch_compound_id1
-    #stitch_compound_id2
-    #side_effect_name
+    ## THINGS TO PRINT : {0: disease_list, 1: curing_drug_list, 2: side_effects_from_drug_list, 3: All}
+    print_value = 1
+
+    ## CHECK ARGS
+    args = sys.argv
+    if "-s" in args:
+        pos = args.index("-s")
+        symptom = args[pos+1]
+    if "-p" in args:
+        pos = args.index("-p")
+        print_value = int(args[pos+1])
 
     # initiation of global lists
     disease_list = []
     curing_drug_list = []
     side_effects_from_drug_list = []
 
-    #disease_list = search_disease_from_symptom(symptom, disease_list)
-    '''
-    content_sider_id = [['CID100000085', 'CID000010917'], ['CID100000085', 'CID000010917'], ['CID100000085', 'CID000010917'], ['CID100000085', 'CID000010917'], ['CID100000143', 'CID000149436'], ['CID100000143', 'CID000149436'], ['CID100000143', 'CID000149436'], ['CID100000143', 'CID000149436'], ['CID100000143', 'CID000149436'], ['CID100000143', 'CID000149436'], ['CID100000143', 'CID000149436'], ['CID100000143', 'CID000149436'], ['CID100000158', 'CID005280360'], ['CID100000158', 'CID005280360'], ['CID100000159', 'CID005282411'], ['CID100000159', 'CID005282411'], ['CID100000159', 'CID005282411'], ['CID100000159', 'CID005282411'], ['CID100000159', 'CID005282411'], ['CID100000159', 'CID005282411'], ['CID100000159', 'CID005282411'], ['CID100000160', 'CID005280363'], ['CID100000160', 'CID005280363'], ['CID100000191', 'CID000060961'], ['CID100000191', 'CID000060961'], ['CID100000191', 'CID000060961'], ['CID100000214', 'CID005280723'], ['CID100000214', 'CID005280723'], ['CID100000247', 'CID000000247'], ['CID100000247', 'CID000000247'], ['CID100000298', 'CID000005959'], ['CID100000298', 'CID000005959'], ['CID100000311', 'CID000000311'], ['CID100000311', 'CID000000311'], ['CID100000311', 'CID000000311'], ['CID100000311', 'CID000000311'], ['CID100000312', 'CID000000312'], ['CID100000312', 'CID000000312'], ['CID100000338', 'CID000000338'], ['CID100000338', 'CID000000338'], ['CID100000444', 'CID000000444'], ['CID100000444', 'CID000000444'], ['CID100000444', 'CID000000444'], ['CID100000444', 'CID000000444'], ['CID100000444', 'CID000000444'], ['CID100000444', 'CID000000444'], ['CID100000444', 'CID000000444'], ['CID100000444', 'CID000000444'], ['CID100000444', 'CID000000444'], ['CID100000444', 'CID000000444'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000450', 'CID000005757'], ['CID100000453', 'CID000006251'], ['CID100000453', 'CID000006251'], ['CID100000564', 'CID000000564'], ['CID100000564', 'CID000000564'], ['CID100000596', 'CID000006252'], ['CID100000596', 'CID000006252'], ['CID100000598', 'CID000000598'], ['CID100000598', 'CID000000598'], ['CID100000598', 'CID000000598'], ['CID100000598', 'CID000000598'], ['CID100000598', 'CID000000598'], ['CID100000698', 'CID000005870'], ['CID100000698', 'CID000005870'], ['CID100000698', 'CID000005870'], ['CID100000698', 'CID000005870'], ['CID100000699', 'CID003001028'], ['CID100000699', 'CID003001028'], ['CID100000699', 'CID003001028'], ['CID100000699', 'CID003001028'], ['CID100000699', 'CID003001028'], ['CID100000699', 'CID003001028'], ['CID100000738', 'CID000005961'], ['CID100000738', 'CID000005961'], ['CID100000738', 'CID000005961'], ['CID100000767', 'CID000000767'], ['CID100000767', 'CID000000767'], ['CID100000767', 'CID000000767'], ['CID100000767', 'CID000000767'], ['CID100000767', 'CID000000767'], ['CID100000774', 'CID000000774'], ['CID100000774', 'CID000000774'], ['CID100000774', 'CID000000774']]
+    def print_function(print_value, disease_list, curing_drug_list, side_effects_from_drug_list):
+        if print_value==0:
+            disease_list = search_disease_from_symptom(symptom, disease_list)
+            print(len(disease_list))
+            printlist(disease_list)
+        elif print_value==1:
+            curing_drug_list = search_curing_drug_from_symtom(symptom, curing_drug_list)
+            print(len(curing_drug_list))
+            printlist(curing_drug_list)
+        elif print_value==2:
+            side_effects_from_drug_list = search_side_effects_drug_from_symptom(symptom, side_effects_from_drug_list)
+            print(len(side_effects_from_drug_list))
+            printlist(side_effects_from_drug_list)
 
-    content_stitch_atc = []
-    for elem in content_sider_id:
-        id1 = elem[0]
-        id2 = elem[1]
-        content_stitch_atc += sider_to_stitch_compoundid1(id1, id2)     
-    '''
+    start = time.time()
 
-    side_effects_from_drug_list = search_side_effects_drug_from_symptom(symptom, side_effects_from_drug_list)
+    if print_value in [0, 1, 2]:
+        print_function(print_value, disease_list, curing_drug_list, side_effects_from_drug_list)
 
-    print(len(side_effects_from_drug_list))
-    printlist(side_effects_from_drug_list)
+    if print_value == 3:
+        print_function(0, disease_list, curing_drug_list, side_effects_from_drug_list)
+        print_function(1, disease_list, curing_drug_list, side_effects_from_drug_list)
+        print_function(2, disease_list, curing_drug_list, side_effects_from_drug_list)
+
+    end = time.time()
+
+    print("#####")
+    print()
+    print(f"time : {end - start}")
+
 
 if __name__ == '__main__':
     main()
