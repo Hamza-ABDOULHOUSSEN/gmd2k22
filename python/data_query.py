@@ -20,11 +20,6 @@ curing_drug_list = [[occurrence, drug_name, description, indication, toxicity, s
 side_effects_from_drug_list = [[occurrence, drug_name, description, indication, toxicity, sources]]
 '''
 
-# GLOBAL LISTS
-disease_list = []
-curing_drug_list = []
-side_effects_from_drug_list = []
-
 ## SEARCH FROM HPO
 def correction_hpo_disease_label(label):
     if (len(label) > 0 and label[0]=='#'):
@@ -95,6 +90,8 @@ def search_disease_from_symptom(symptom, disease_list):
     Total_hpo_count = len(content_hpo)
     count = 0
 
+    allready_add_name_occurence = {}
+
     for elem in content_hpo:
         hpo_id = elem[0]
 
@@ -104,7 +101,18 @@ def search_disease_from_symptom(symptom, disease_list):
             count += 1
         else:
             for disease in disease_list_from_hpo:
-                disease_list.append([symptom, disease, "hpo"])
+
+                if disease in allready_add_name_occurence:
+                    allready_add_name_occurence[disease] += 1
+                else:
+                    allready_add_name_occurence[disease] = 1
+
+    allready_add_name_occurence = dict(sorted(allready_add_name_occurence.items(), key=lambda item: item[1], reverse=True))
+
+    for disease in allready_add_name_occurence:
+        occurrence = allready_add_name_occurence[disease]
+        sources = "hpo"
+        disease_list.append([occurrence, disease, sources])
 
     return disease_list
 
@@ -144,19 +152,19 @@ def search_side_effects_drug_from_symptom(symptom, side_effects_from_drug_list):
             toxicity = item[3]
             bloc = [description, indication, toxicity, 'sider / stitch / drugbank']
             allready_add_name_item[name] = bloc
-            allready_add_name_occurence[name] = 0
+            allready_add_name_occurence[name] = 1
 
 
     allready_add_name_occurence = dict(sorted(allready_add_name_occurence.items(), key=lambda item: item[1], reverse=True))
 
     for name in allready_add_name_occurence:
         bloc = allready_add_name_item[name]
-        occurence = allready_add_name_occurence[name]
+        occurrence = allready_add_name_occurence[name]
         description = bloc[0]
         indication = bloc[1]
         toxicity = bloc[2]
         source = bloc[3]
-        side_effects_from_drug_list.append([occurence, name, description, indication, toxicity, source])
+        side_effects_from_drug_list.append([occurrence, name, description, indication, toxicity, source])
 
     return side_effects_from_drug_list
 
@@ -164,15 +172,33 @@ def search_curing_drug_from_symtom(symptom, curing_drug_list):
     query = create_drugbank_query(symptom)
     content_drugbank = drugbank_search(query)
 
-    for elem in content_drugbank:
-        occurrence = 1
-        drug_name = elem[1]
-        description = elem[2]
-        indication = elem[3]
-        toxicity = elem[4]
-        sources = "drugbank"
+    allready_add_name_occurence = {}
+    allready_add_name_item = {}
+    for item in content_drugbank:
+        name = item[1]
 
-        curing_drug_list.append([occurrence, drug_name, description, indication, toxicity, sources])
+        if name in allready_add_name_occurence:
+            allready_add_name_occurence[name] += 1
+        else:
+            description = item[2]
+            indication = item[3]
+            toxicity = item[4]
+            sources = "drugbank"
+            bloc = [description, indication, toxicity, sources]
+            allready_add_name_item[name] = bloc
+            allready_add_name_occurence[name] = 1
+
+    allready_add_name_occurence = dict(sorted(allready_add_name_occurence.items(), key=lambda item: item[1], reverse=True))
+
+    for name in allready_add_name_occurence:
+        bloc = allready_add_name_item[name]
+        occurrence = allready_add_name_occurence[name]
+        description = bloc[0]
+        indication = bloc[1]
+        toxicity = bloc[2]
+        sources = bloc[3]
+
+        curing_drug_list.append([occurrence, name, description, indication, toxicity, sources])
 
     return curing_drug_list
 
