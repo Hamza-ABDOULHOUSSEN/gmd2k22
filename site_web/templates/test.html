@@ -311,7 +311,7 @@
 										<thead>
 											<tr>
 												<th> Disease name </th>
-												<th> occurence </th>
+												<th> occurrence </th>
 												<th> Source </th>
 											</tr>
 										</thead>
@@ -357,9 +357,12 @@
 								<table class="table table-striped">
 									<thead>
 										<tr>
-											<th> Field1 </th>
-											<th> Field2 </th>
-											<th> Field3 </th>
+											<th> drug_name </th>
+											<th> occurrence </th>
+											<th> description </th>
+                                            <th> indication </th>
+                                            <th> toxicity </th>
+                                            <th> sources </th>
 										</tr>
 									</thead>
 									<tbody id="bodyDrugs">
@@ -368,6 +371,9 @@
 											<td>{{res[1]}}</td>
 											<td>{{res[0]}}</td>
 											<td>{{res[2]}}</td>
+                                            <td>{{res[3]}}</td>
+                                            <td>{{res[4]}}</td>
+                                            <td>{{res[5]}}</td>
 										</tr>
 										{% endfor %}
 									</tbody>
@@ -404,9 +410,12 @@
 								<table class="table table-striped">
 									<thead>
 										<tr>
-											<th> Field1 </th>
-											<th> Field2 </th>
-											<th> Field3 </th>
+											<th> drug_name </th>
+											<th> occurrence </th>
+											<th> description </th>
+                                            <th> indication </th>
+                                            <th> toxicity </th>
+                                            <th> sources </th>
 										</tr>
 									</thead>
 									<tbody id="bodySideEffects">
@@ -415,6 +424,9 @@
 											<td>{{res[1]}}</td>
 											<td>{{res[0]}}</td>
 											<td>{{res[2]}}</td>
+                                            <td>{{res[3]}}</td>
+                                            <td>{{res[4]}}</td>
+                                            <td>{{res[5]}}</td>
 										</tr>
 										{% endfor %}
 									</tbody>
@@ -530,9 +542,9 @@
                         .toLowerCase().indexOf(value) > -1)
                     });
                 });
-				$("#searchDisease").on("keyup", function() {
+				$("#searchSideEffects").on("keyup", function() {
                     var value = $(this).val().toLowerCase();
-                    $("#bodyDisease tr").filter(function() {
+                    $("#bodySideEffects tr").filter(function() {
                         $(this).toggle($(this).text()
                         .toLowerCase().indexOf(value) > -1)
                     });
