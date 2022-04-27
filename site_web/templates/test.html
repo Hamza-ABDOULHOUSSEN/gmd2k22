@@ -316,11 +316,11 @@
 											</tr>
 										</thead>
 										<tbody id="bodyDisease">
-											{% for res in disease_list %}
+											{% for name in disease_list %}
 											<tr>
-												<td>{{res[1]}}</td>
-												<td>{{res[0]}}</td>
-												<td>{{res[2]}}</td>
+												<td>{{ name }}</td>
+												<td>{{ disease_list[name][0] }}</td>
+												<td>{{ disease_list[name][1] }}</td>
 											</tr>
 											{% endfor %}
 										</tbody>
@@ -366,14 +366,14 @@
 										</tr>
 									</thead>
 									<tbody id="bodyDrugs">
-										{% for res in curing_drug_list %}
+										{% for name in curing_drug_list %}
 										<tr>
-											<td>{{res[1]}}</td>
-											<td>{{res[0]}}</td>
-											<td>{{res[2]}}</td>
-                                            <td>{{res[3]}}</td>
-                                            <td>{{res[4]}}</td>
-                                            <td>{{res[5]}}</td>
+											<td>{{ name }}</td>
+											<td>{{ curing_drug_list[name][0] }}</td>
+                                            <td>{{ curing_drug_list[name][1] }}</td>
+                                            <td>{{ curing_drug_list[name][2] }}</td>
+                                            <td>{{ curing_drug_list[name][3] }}</td>
+                                            <td>{{ curing_drug_list[name][4] }}</td>
 										</tr>
 										{% endfor %}
 									</tbody>
@@ -419,14 +419,14 @@
 										</tr>
 									</thead>
 									<tbody id="bodySideEffects">
-										{% for res in side_effects_from_drug_list %}
+										{% for name in side_effects_from_drug_list %}
 										<tr>
-											<td>{{res[1]}}</td>
-											<td>{{res[0]}}</td>
-											<td>{{res[2]}}</td>
-                                            <td>{{res[3]}}</td>
-                                            <td>{{res[4]}}</td>
-                                            <td>{{res[5]}}</td>
+											<td>{{ name }}</td>
+											<td>{{ side_effects_from_drug_list[name][0] }}</td>
+                                            <td>{{ side_effects_from_drug_list[name][1] }}</td>
+                                            <td>{{ side_effects_from_drug_list[name][2] }}</td>
+                                            <td>{{ side_effects_from_drug_list[name][3] }}</td>
+                                            <td>{{ side_effects_from_drug_list[name][4] }}</td>
 										</tr>
 										{% endfor %}
 									</tbody>

@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 
 from requests import *
+from concat_dict import *
 import forms
 
 app = Flask(__name__)
@@ -69,11 +70,9 @@ def test():
         M = min(content_id_start + 5, len(content_sider_id))
         content_id_start += 5
 
-        side_effects_from_drug_list += search_side_effects_drug_from_content_sider_id(
-            content_sider_id[content_id_start:content_id_start + M], side_effects_from_drug_list)
+        side_effects_from_drug_list_new = search_side_effects_drug_from_content_sider_id(content_sider_id[content_id_start:content_id_start + M], side_effects_from_drug_list)
 
-        count_disease_list, count_curing_drug_list, count_side_effects_from_drug_list = len(disease_list), len(
-            curing_drug_list), len(side_effects_from_drug_list)
+        count_disease_list, count_curing_drug_list, count_side_effects_from_drug_list = len(disease_list), len(curing_drug_list), len(side_effects_from_drug_list)
 
         return render_template("test.html", FormQuery=FormQuery, query=query,
                                count_disease_list=count_disease_list,
@@ -90,7 +89,7 @@ def test():
             query = arguments["query"]
             symptom = query.lower()
 
-            disease_list, curing_drug_list, side_effects_from_drug_list = [], [], []
+            disease_list, curing_drug_list, side_effects_from_drug_list = {}, {}, {}
             content_sider_id = []
 
             disease_list = search_disease_from_symptom(symptom, disease_list)
