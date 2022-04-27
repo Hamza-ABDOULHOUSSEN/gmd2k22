@@ -121,8 +121,8 @@ def search_side_effects_drug_from_symptom(symptom, side_effects_from_drug_list):
     ## get symptoms
     content_sider_id = get_sider_id(symptom)
 
-    if len(content_sider_id) > 100:
-        content_sider_id = content_sider_id[:100]
+    if len(content_sider_id) > 2:
+        content_sider_id = content_sider_id[:2]
 
     ## link with stitch
     content_stitch_atc = []
@@ -131,8 +131,8 @@ def search_side_effects_drug_from_symptom(symptom, side_effects_from_drug_list):
         id2 = elem[1]
         content_stitch_atc += sider_to_stitch_compoundid1(id1, id2)
 
-    if len(content_stitch_atc) > 500:
-        content_stitch_atc = content_stitch_atc[:500]
+    if len(content_stitch_atc) > 100:
+        content_stitch_atc = content_stitch_atc[:100]
 
     ## link with drugbank
     content_drugbank = []

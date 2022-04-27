@@ -5,8 +5,6 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 	<head>
-		    {% from "_formhelpers.html" import render_field %}
-
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Hurry my drug &mdash; lol </title>
@@ -46,9 +44,6 @@
 	<!-- 
 	Default Theme Style 
 	You can change the style.css (default color purple) to one of these styles
-	
-	
-
 	-->
 	<link rel="stylesheet" href="static/css/style.css">
 
@@ -56,8 +51,8 @@
 	<link rel="stylesheet" id="theme-switch" href="static/css/style.css">
 	<!-- End demo purposes only -->
 
-
 	<style>
+
 	/* For demo purpose only */
 
 	/*
@@ -220,6 +215,12 @@
 	<script src="static/js/respond.min.js"></script>
 	<![endif]-->
 
+	{% from "_formhelpers.html" import render_field %}
+
+		<script src=
+			"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    	</script>
+
 	</head>
 
 
@@ -278,13 +279,14 @@
 				</a>
 			</div>
 		</section>
-		<!-- 1ere page -->
+		<!-- END first page -->
 
 
 		{% if query != "none" %}
 			<section id="sectionDiseases">
 				<div class="container">
 					<div class="row row-bottom-padded-md">
+						<img src="static/images/img_disease.jpg" alt="image", width="300", height="300">
 						<div class="col-md-6 col-md-offset-3 text-center">
 							<h2 class="fh5co-lead animate-box">Disease</h2>
 							<p class="fh5co-sub-lead animate-box"> Here are the diseases that matchs your symptom. </p>
@@ -297,6 +299,10 @@
 
             <section>
 					<div class="flexslider">
+						 <b>
+						  	<input id="searchDisease" type="text"
+								 placeholder="Search here">
+						 </b>
 						<ul class="slides">
 							<li>
 								<p> There are {{count_disease_list}} results </p>
@@ -310,7 +316,7 @@
 												<th> Source </th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="bodyDisease">
 											{% for res in disease_list %}
 											<tr>
 												<td>{{res[1]}}</td>
@@ -340,6 +346,10 @@
 					</div>
 				</div>
 				<div class="flexslider">
+					<b>
+						<input id="searchDrugs" type="text"
+							   placeholder="Search here">
+					</b>
 					<ul class="slides">
 						<li>
 							<p> There are {{count_curing_drug_list}} results </p>
@@ -353,7 +363,7 @@
 											<th> Field3 </th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="bodyDrugs">
 										{% for res in curing_drug_list %}
 										<tr>
 											<td>{{res[1]}}</td>
@@ -375,14 +385,18 @@
 			<section id="sectionSideEffects">
 				<div class="container">
 					<div class="row row-bottom-padded-sm">
+						<img src="static/images/img_sideEffects.jpg" alt="image">
 						<div class="col-md-6 col-md-offset-3 text-center">
 							<h2 class="fh5co-lead animate-box">Side effects </h2>
 							<p class="fh5co-sub-lead animate-box">Here are the drugs that might cause you this symptom.</p>
-
 						</div>
 					</div>
 				</div>
 				<div class="flexslider">
+					<b>
+						<input id="searchSideEffects" type="text"
+							   placeholder="Search here">
+					</b>
 					<ul class="slides">
 						<li>
 							<p> There are {{count_side_effects_from_drug_list}} results </p>
@@ -396,7 +410,7 @@
 											<th> Field3 </th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="bodySideEffects">
 										{% for res in side_effects_from_drug_list %}
 										<tr>
 											<td>{{res[1]}}</td>
@@ -422,32 +436,6 @@
 				<div class="row row-bottom-padded-md">
 					<div class="col-md-3 col-sm-6 col-xs-12 animate-box">
 						<div class="fh5co-footer-widget">
-							<h3>Company</h3>
-							<ul class="fh5co-links">
-								<li><a href="#">About Us</a></li>
-								<li><a href="#">Careers</a></li>
-								<li><a href="#">Feature Tour</a></li>
-								<li><a href="#">Pricing</a></li>
-								<li><a href="#">Team</a></li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-md-3 col-sm-6 col-xs-12 animate-box">
-						<div class="fh5co-footer-widget">
-							<h3>Support</h3>
-							<ul class="fh5co-links">
-								<li><a href="#">Knowledge Base</a></li>
-								<li><a href="#">24/7 Call Support</a></li>
-								<li><a href="#">Video Demos</a></li>
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-md-3 col-sm-6 col-xs-12 animate-box">
-						<div class="fh5co-footer-widget">
 							<h3>Contact Us</h3>
 							<p>
 								<a href="mailto:info@freehtml5.co">hamza.abdoulhoussen@telecomnancy.eu</a> <br>
@@ -455,31 +443,6 @@
 								Nancy, France <br>
 								<a href="tel:+123456789"> 06 12 24 48 96</a>
 							</p>
-						</div>
-					</div>
-
-					<div class="col-md-3 col-sm-6 col-xs-12 animate-box">
-						<div class="fh5co-footer-widget">
-							<h3>Follow Us</h3>
-							<ul class="fh5co-social">
-								<li><a href="#"><i class="icon-twitter"></i></a></li>
-								<li><a href="#"><i class="icon-facebook"></i></a></li>
-								<li><a href="#"><i class="icon-google-plus"></i></a></li>
-								<li><a href="#"><i class="icon-instagram"></i></a></li>
-								<li><a href="#"><i class="icon-youtube-play"></i></a></li>
-							</ul>
-						</div>
-					</div>
-
-				</div>
-
-			</div>
-			<div class="fh5co-copyright animate-box">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<p class="fh5co-left"><small>&copy; 2016 <a href="index.html">Guide</a> free html5. All Rights Reserved.</small></p>
-							<p class="fh5co-right"><small class="fh5co-right">Designed by <a href="http://freehtml5.co" target="_blank">FREEHTML5.co</a> Demo Images: <a href="http://unsplash.com" target="_blank">Unsplash</a></small></p>
 						</div>
 					</div>
 				</div>
@@ -547,25 +510,18 @@
 	<!-- Main JS (Do not remove) -->
 	<script src="static/js/main.js"></script>
 
-	<!--
-	INFO:
-	jQuery Cookie for Demo Purposes Only.
-	The code below is to toggle the layout to boxed or wide
-	-->
+	<!-- Toggle the layout to boxed or wide -->
 	<script src="static/js/jquery.cookie.js"></script>
 	<script>
 		$(function(){
-
 			if ( $.cookie('layoutCookie') != '' ) {
 				$('body').addClass($.cookie('layoutCookie'));
 			}
-
 			$('a[data-layout="boxed"]').click(function(event){
 				event.preventDefault();
 				$.cookie('layoutCookie', 'boxed', { expires: 7, path: '/'});
 				$('body').addClass($.cookie('layoutCookie')); // the value is boxed.
 			});
-
 			$('a[data-layout="wide"]').click(function(event){
 				event.preventDefault();
 				$('body').removeClass($.cookie('layoutCookie')); // the value is boxed.
@@ -573,6 +529,35 @@
 			});
 		});
 	</script>
+
+
+
+	<!-- Request filter -->
+		<script>
+            $(document).ready(function() {
+                $("#searchDisease").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#bodyDisease tr").filter(function() {
+                        $(this).toggle($(this).text()
+                        .toLowerCase().indexOf(value) > -1)
+                    });
+                });
+				$("#searchDrugs").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#bodyDrugs tr").filter(function() {
+                        $(this).toggle($(this).text()
+                        .toLowerCase().indexOf(value) > -1)
+                    });
+                });
+				$("#searchDisease").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#bodyDisease tr").filter(function() {
+                        $(this).toggle($(this).text()
+                        .toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
 
 
 	</body>
