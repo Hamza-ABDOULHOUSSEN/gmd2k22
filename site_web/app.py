@@ -5,6 +5,10 @@ import forms
 
 app = Flask(__name__)
 
+disease_list, curing_drug_list, side_effects_from_drug_list = [], [], []
+content_sider_id = []
+content_id_start = 0
+
 @app.route('/', methods = ["GET"])
 def index():
     return render_template("index.html")
@@ -54,12 +58,29 @@ def test():
     arguments = request.args
 
     query = "none"
-    disease_list, curing_drug_list, side_effects_from_drug_list = [], [], []
     count_disease_list, count_curing_drug_list, count_side_effects_from_drug_list = 0, 0, 0
+
+    global disease_list, curing_drug_list, side_effects_from_drug_list
+    global content_sider_id
 
     if len(arguments) != 0:
         query = arguments["query"]
-        disease_list, curing_drug_list, side_effects_from_drug_list = sb(query)
+        symptom = query.lower()
+
+        disease_list, curing_drug_list, side_effects_from_drug_list = [], [], []
+        content_sider_id = []
+
+        disease_list = search_disease_from_symptom(symptom, disease_list)
+        curing_drug_list = search_curing_drug_from_symtom(symptom, curing_drug_list)
+
+        content_sider_id = get_sider_id(symptom)
+        content_id_start = 0
+
+        M = min(content_id_start+5, len(content_sider_id))
+        content_id_start+=5
+
+        side_effects_from_drug_list = search_side_effects_drug_from_content_sider_id(content_sider_id[content_id_start:content_id_start+M], side_effects_from_drug_list)
+
         count_disease_list, count_curing_drug_list, count_side_effects_from_drug_list = len(disease_list), len(curing_drug_list), len(side_effects_from_drug_list)
 
     return render_template("test.html", FormQuery=FormQuery, query=query,
@@ -71,10 +92,27 @@ def test():
                            side_effects_from_drug_list = side_effects_from_drug_list
                            )
 
+@app.route('/test', methods = ["GET"])
+def plus():
+    global content_id_start
+    global disease_list, curing_drug_list, side_effects_from_drug_list
+    global content_sider_id
 
+    M = min(content_id_start + 5, len(content_sider_id))
+    content_id_start += 5
 
+    side_effects_from_drug_list += search_side_effects_drug_from_content_sider_id(content_sider_id[content_id_start:content_id_start + M], side_effects_from_drug_list)
 
+    count_disease_list, count_curing_drug_list, count_side_effects_from_drug_list = len(disease_list), len(curing_drug_list), len(side_effects_from_drug_list)
 
+    return render_template("test.html",
+                           count_disease_list=count_disease_list,
+                           count_curing_drug_list=count_curing_drug_list,
+                           count_side_effects_from_drug_list=count_side_effects_from_drug_list,
+                           disease_list=disease_list,
+                           curing_drug_list=curing_drug_list,
+                           side_effects_from_drug_list=side_effects_from_drug_list
+                           )
 
 if __name__ == '__main__':
     app.run()

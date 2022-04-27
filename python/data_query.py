@@ -168,6 +168,52 @@ def search_side_effects_drug_from_symptom(symptom, side_effects_from_drug_list):
 
     return side_effects_from_drug_list
 
+def search_side_effects_drug_from_content_sider_id(content_sider_id, side_effects_from_drug_list):
+
+        ## link with stitch
+        content_stitch_atc = []
+        for elem in content_sider_id:
+            id1 = elem[0]
+            id2 = elem[1]
+            content_stitch_atc += sider_to_stitch_compoundid1(id1, id2)
+
+        if len(content_stitch_atc) > 500:
+            content_stitch_atc = content_stitch_atc[:500]
+
+        ## link with drugbank
+        content_drugbank = []
+        for atc_code in content_stitch_atc:
+            content_drugbank += stitch_atc_code_to_drugbank(atc_code)
+
+        allready_add_name_occurence = {}
+        allready_add_name_item = {}
+        for item in content_drugbank:
+            name = item[0]
+
+            if name in allready_add_name_occurence:
+                allready_add_name_occurence[name] += 1
+            else:
+                description = item[1]
+                indication = item[2]
+                toxicity = item[3]
+                bloc = [description, indication, toxicity, 'sider / stitch / drugbank']
+                allready_add_name_item[name] = bloc
+                allready_add_name_occurence[name] = 1
+
+        allready_add_name_occurence = dict(
+            sorted(allready_add_name_occurence.items(), key=lambda item: item[1], reverse=True))
+
+        for name in allready_add_name_occurence:
+            bloc = allready_add_name_item[name]
+            occurrence = allready_add_name_occurence[name]
+            description = bloc[0]
+            indication = bloc[1]
+            toxicity = bloc[2]
+            source = bloc[3]
+            side_effects_from_drug_list.append([occurrence, name, description, indication, toxicity, source])
+
+        return side_effects_from_drug_list
+
 def search_curing_drug_from_symtom(symptom, curing_drug_list):
     query = create_drugbank_query(symptom)
     content_drugbank = drugbank_search(query)
@@ -201,22 +247,6 @@ def search_curing_drug_from_symtom(symptom, curing_drug_list):
         curing_drug_list.append([occurrence, name, description, indication, toxicity, sources])
 
     return curing_drug_list
-
-def complete_search(symptom):
-
-    # correction of the input
-    symptom = symptom.lower()
-
-    # initiation of global lists
-    disease_list = []
-    curing_drug_list = []
-    side_effects_from_drug_list = []
-
-    disease_list = search_disease_from_symptom(symptom, disease_list)
-    curing_drug_list = search_curing_drug_from_symtom(symptom, curing_drug_list)
-    side_effects_from_drug_list = search_side_effects_drug_from_symptom(symptom, side_effects_from_drug_list)
-
-    return disease_list, curing_drug_list, side_effects_from_drug_list
 
 def main():
 
