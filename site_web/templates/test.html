@@ -28,7 +28,7 @@
 	<meta name="twitter:card" content="" />
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="shortcut icon" href="static/assets/favicon.ico">
 
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,600,400italic,700' rel='stylesheet' type='text/css'>
 	
@@ -239,9 +239,9 @@
 			<div class="container">
 				<nav class="navigation header__nav">
 					<ul class="nav__list">
-						<li class="nav__item"><a href="#sectionDiseases" class="nav__link"><span class="nav__item_underline"></span>Diseases</a></li>
-						<li class="nav__item"><a href="#sectionDrugs" class="nav__link"><span class="nav__item_underline"></span>Drugs healing</a></li>
-						<li class="nav__item"><a href="#sectionSideEffects" class="nav__link"><span class="nav__item_underline"></span>Side effects</a></li>
+						<button class="btn btn-outline-success" type="button"><a href="#sectionDiseases" class="nav__link"><span class="nav__item_underline"></span>Diseases</a></button>
+						<button class="btn btn-outline-success" type="button"><a href="#sectionDrugs" class="nav__link"><span class="nav__item_underline"></span>Drugs healing</a></button>
+						<button class="btn btn-outline-success" type="button"><a href="#sectionSideEffects" class="nav__link"><span class="nav__item_underline"></span>Side effects</a></button>
 					</ul>
 				</nav>
 			</div>
@@ -273,7 +273,6 @@
 			</div>
 			<div class="fh5co-learn-more animate-box">
 				<a href="#" class="scroll-btn">
-					<span class="text">See the results</span>
 					<span class="arrow"><i class="icon-chevron-down"></i></span>
 				</a>
 			</div>
@@ -282,7 +281,7 @@
 
 
 		{% if query != "none" %}
-			<section id="sectionDiseases">
+			<section id="sectionDiseases" data-bs-spy="scroll">
 				<div class="container">
 					<div class="row row-bottom-padded-md">
 						<div class="col-md-6 col-md-offset-3 text-center">
@@ -302,7 +301,7 @@
 								<p> There are {{count_disease_list}} results </p>
 								{% if count_disease_list != 0 %}
 								<div style="overflow-y: scroll; height:400px">
-									<table>
+									<table class="table table-striped">
 										<thead>
 											<tr>
 												<th> Disease name </th>
@@ -345,7 +344,7 @@
 							<p> There are {{count_curing_drug_list}} results </p>
 							{% if count_curing_drug_list != 0 %}
 							<div style="overflow-y: scroll; height:400px">
-								<table>
+								<table class="table table-striped">
 									<thead>
 										<tr>
 											<th> Field1 </th>
@@ -388,7 +387,7 @@
 							<p> There are {{count_side_effects_from_drug_list}} results </p>
 							{% if count_side_effects_from_drug_list != 0 %}
 							<div style="overflow-y: scroll; height:400px">
-								<table>
+								<table class="table table-striped">
 									<thead>
 										<tr>
 											<th> Field1 </th>
@@ -414,6 +413,9 @@
 				</div>
 			</section>
 			<!-- END section Side Effects -->
+
+			<button name="plus" onclick="plus()">plus</button>
+			<h3>{{n}}</h3>
 		{% endif %}
 
 
@@ -488,27 +490,6 @@
 		<!-- END coordonnees -->
 	</div>
 	<!-- END Page -->
-
-	<!-- For demo purposes Only ( You may delete this anytime :-) -->
-	<div id="colour-variations">
-		<a class="option-toggle"><i class="icon-gear"></i></a>
-		<h3>Preset Colors</h3>
-		<ul>
-			<li><a href="javascript: void(0);" data-theme="style"></a></li>
-			<li><a href="javascript: void(0);" data-theme="red"></a></li>
-			<li><a href="javascript: void(0);" data-theme="turquoise"></a></li>
-			<li><a href="javascript: void(0);" data-theme="blue"></a></li>
-			<li><a href="javascript: void(0);" data-theme="orange"></a></li>
-			<li><a href="javascript: void(0);" data-theme="yellow"></a></li>
-			<li><a href="javascript: void(0);" data-theme="pink"></a></li>
-			<li><a href="javascript: void(0);" data-theme="purple"></a></li>
-		</ul>
-		<a href="#" data-layout="boxed">Boxed</a>
-		<a href="#" data-layout="wide">Wide</a>
-	</div>
-	<!-- End demo purposes only -->
-
-
 
 	
 	<!-- jQuery -->
