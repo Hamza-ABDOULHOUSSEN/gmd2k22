@@ -1,6 +1,7 @@
 Table OMIM_CSV as o_c {
   CUI varchar(8)
   Class_ID link
+  Synonyms text
 }
 
 Table "OMIM_TXT   [INDEX]" as o_t {
@@ -30,6 +31,7 @@ Table "HPO_OBO   [INDEX]" as h_o {
 
 Table HPO_ANNOTATION as h_a {
   disease_id varchar
+  disease_label varchar
   sign_id varchar
 }
 
@@ -93,8 +95,6 @@ Table Schema_global {
 
 Ref: "OMIM_CSV"."Class_ID" - "OMIM_TXT   [INDEX]"."omim_id"
 
-Ref: "OMIM_CSV"."CUI" - "HPO_ANNOTATION"."disease_id"
-
 Ref: "HPO_ANNOTATION"."sign_id" - "HPO_OBO   [INDEX]"."hpo_id"
 
 Ref: "SIDER_MEDDRA"."cui" - "SIDER_MEDDRA_ALL_INDICATIONS"."cui"
@@ -109,3 +109,28 @@ Ref: "SIDER_MEDDRA"."concept_type" - "SIDER_MEDDRA_ALL_SE"."meddra_concept_type"
 Ref: "SIDER_MEDDRA"."concept_type" - "SIDER_MEDDRA_FREQ"."meddra_concept_type"
 
 Ref: "STIICH_BR   [INDEX]"."atc_code" - "STIICH_CS   [INDEX]"."source_code"
+
+Ref: "DRUG_BANK   [INDEX]"."atc_code" - "STIICH_BR   [INDEX]"."atc_code"
+
+Ref: "STIICH_CS   [INDEX]"."chemical" - "SIDER_MEDDRA_ALL_SE"."stitch_compound_id1"
+Ref: "STIICH_CS   [INDEX]"."alias" - "SIDER_MEDDRA_ALL_SE"."stitch_compound_id2"
+
+Ref: "DRUG_BANK   [INDEX]"."name" - "Schema_global"."Medicament"
+
+Ref: "HPO_OBO   [INDEX]"."symptom" - "Schema_global"."Symptome"
+Ref: "HPO_OBO   [INDEX]"."synonyms" - "Schema_global"."Symptome"
+Ref: "HPO_OBO   [INDEX]"."is_a" - "Schema_global"."Symptome"
+
+Ref: "OMIM_TXT   [INDEX]"."field0" - "Schema_global"."Symptome"
+Ref: "OMIM_TXT   [INDEX]"."field1" - "Schema_global"."Symptome"
+Ref: "OMIM_TXT   [INDEX]"."symptoms" - "Schema_global"."Symptome"
+
+Ref: "HPO_ANNOTATION"."disease_label" - "Schema_global"."Maladie"
+
+Ref: "OMIM_CSV"."Synonyms" - "Schema_global"."Symptome"
+Ref: "DRUG_BANK   [INDEX]"."synonyms" - "Schema_global"."Symptome"
+
+Ref: "DRUG_BANK   [INDEX]"."toxicity" - "Schema_global"."Effet_secondaire"
+Ref: "SIDER_MEDDRA_ALL_SE"."side_effect_name" - "Schema_global"."Effet_secondaire"
+
+Ref: "DRUG_BANK   [INDEX]"."description" - "Schema_global"."Symptome"

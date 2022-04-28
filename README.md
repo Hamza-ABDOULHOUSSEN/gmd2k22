@@ -21,7 +21,12 @@
 
 ## Link to the diagram
 [Diagram](https://dbdiagram.io/d/62470edfd043196e39dbc1bd)
+
+
 ![Alt Text](./documentation/dbdiagram/images/Diagram_04_22.png)
+
+## Presentation
+[Presentation](Presentation_projet_GMD.pdf)
 
 ## Links to search
 hpo_annotations.sqlite :  
