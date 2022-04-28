@@ -3,6 +3,8 @@ from flask import Flask, request, render_template
 from requests import *
 from concat_dict import *
 import forms
+from data_query import get_sider_id, search_curing_drug_from_symtom, search_disease_from_symptom, search_side_effects_drug_from_content_sider_id
+from requests import drugbank_query
 
 app = Flask(__name__)
 

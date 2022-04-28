@@ -59,11 +59,11 @@ def get_diseases_from_hpo(hpo_id):
 
 ## SEARCH FROM SIDER
 
-SIDER_FILE = "../data/MEDDRAS/meddra_all_se2.csv"
+SIDER_FILE = "../data/MEDDRAS/meddra_all_se.csv"
 
 def get_sider_id(symptom):
     content = []
-    df = pd.read_csv(SIDER_FILE, sep=',')
+    df = pd.read_csv(SIDER_FILE, sep=',', on_bad_lines='skip')
     n = len(df)
 
     for k in range(n):
