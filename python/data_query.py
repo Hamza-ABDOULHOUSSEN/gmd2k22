@@ -111,36 +111,58 @@ def search_disease_from_symptom(symptom, disease_list):
 
 def search_side_effects_drug_from_content_sider_id(content_sider_id, side_effects_from_drug_list):
 
-        ## link with stitch
-        content_stitch_atc = []
-        for elem in content_sider_id:
-            id1 = elem[0]
-            id2 = elem[1]
-            content_stitch_atc += sider_to_stitch_compoundid1(id1, id2)
+    ## link with stitch
+    content_stitch_atc = []
+    for elem in content_sider_id:
+        id1 = elem[0]
+        id2 = elem[1]
+        content_stitch_atc += sider_to_stitch_compoundid1(id1, id2)
 
-        if len(content_stitch_atc) > 500:
-            content_stitch_atc = content_stitch_atc[:500]
+    if len(content_stitch_atc) > 500:
+        content_stitch_atc = content_stitch_atc[:500]
 
-        ## link with drugbank
-        content_drugbank = []
-        for atc_code in content_stitch_atc:
-            content_drugbank += stitch_atc_code_to_drugbank(atc_code)
+    ## link with drugbank
+    content_drugbank = []
+    for atc_code in content_stitch_atc:
+        content_drugbank += stitch_atc_code_to_drugbank(atc_code)
 
-        for item in content_drugbank:
-            name = item[0]
+    for item in content_drugbank:
+        name = item[0]
 
-            if name in side_effects_from_drug_list:
-                side_effects_from_drug_list[name][0] += 1
-            else:
-                description = item[1]
-                indication = item[2]
-                toxicity = item[3]
-                bloc = [1, description, indication, toxicity, 'sider / stitch / drugbank']
-                side_effects_from_drug_list[name] = bloc
+        if name in side_effects_from_drug_list:
+            side_effects_from_drug_list[name][0] += 1
+        else:
+            description = item[1]
+            indication = item[2]
+            toxicity = item[3]
+            bloc = [1, description, indication, toxicity, 'sider / stitch / drugbank']
+            side_effects_from_drug_list[name] = bloc
 
-        allready_add_name_occurence = dict(sorted(side_effects_from_drug_list.items(), key=lambda item: item[1], reverse=True))
+    side_effects_from_drug_list = dict(sorted(side_effects_from_drug_list.items(), key=lambda item: item[1], reverse=True))
 
-        return side_effects_from_drug_list
+    return side_effects_from_drug_list
+
+def search_side_effects_drug_from_drugbank(symptom, side_effects_from_drug_list):
+    query = create_drugbank_query_side_effect(symptom)
+    content_drugbank = drugbank_search(query)
+
+    for item in content_drugbank:
+        name = item[1]
+
+        if name in side_effects_from_drug_list:
+            side_effects_from_drug_list[name][0] +=1
+
+        else:
+            description = item[2]
+            indication = item[3]
+            toxicity = item[4]
+            sources = 'sider / stitch / drugbank'
+            bloc = [1, description, indication, toxicity, sources]
+            side_effects_from_drug_list[name] = bloc
+
+    side_effects_from_drug_list = dict(sorted(side_effects_from_drug_list.items(), key=lambda item: item[1], reverse=True))
+
+    return side_effects_from_drug_list
 
 def search_curing_drug_from_symtom(symptom, curing_drug_list):
     query = create_drugbank_query(symptom)
@@ -159,7 +181,7 @@ def search_curing_drug_from_symtom(symptom, curing_drug_list):
             bloc = [1, description, indication, toxicity, sources]
             curing_drug_list[name] = bloc
 
-    allready_add_name_occurence = dict(sorted(curing_drug_list.items(), key=lambda item: item[1], reverse=True))
+    curing_drug_list = dict(sorted(curing_drug_list.items(), key=lambda item: item[1], reverse=True))
 
     return curing_drug_list
 

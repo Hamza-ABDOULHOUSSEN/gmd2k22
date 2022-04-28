@@ -3,12 +3,11 @@ from flask import Flask, request, render_template
 from requests import *
 from concat_dict import *
 import forms
-from data_query import get_sider_id, search_curing_drug_from_symtom, search_disease_from_symptom, search_side_effects_drug_from_content_sider_id
-from requests import drugbank_query
 
 app = Flask(__name__)
 
-disease_list, curing_drug_list, side_effects_from_drug_list = [], [], []
+disease_list, curing_drug_list, side_effects_from_drug_list = {}, {}, {}
+side_effects_from_drug_list_drugbank = {}
 content_sider_id = []
 content_id_start = 0
 
@@ -65,17 +64,15 @@ def test():
 
     global content_id_start
     global disease_list, curing_drug_list, side_effects_from_drug_list
+    global side_effects_from_drug_list_drugbank
     global content_sider_id
-
-    # [value for value in lst1 if value in lst2]
-    # list(set(l1+l2))
 
     if request.method == 'POST':
         query = "pas none"
         M = min(content_id_start + 5, len(content_sider_id))
         content_id_start += 5
 
-        side_effects_from_drug_list_new = search_side_effects_drug_from_content_sider_id(content_sider_id[content_id_start:content_id_start + M], side_effects_from_drug_list)
+        side_effects_from_drug_list = search_side_effects_drug_from_content_sider_id(content_sider_id[content_id_start:content_id_start + M], side_effects_from_drug_list)
 
         count_disease_list, count_curing_drug_list, count_side_effects_from_drug_list = len(disease_list), len(curing_drug_list), len(side_effects_from_drug_list)
 
@@ -93,6 +90,7 @@ def test():
             query = arguments["query"]
 
             disease_list, curing_drug_list, side_effects_from_drug_list = {}, {}, {}
+            side_effects_from_drug_list_drugbank = {}
             content_sider_id = []
 
             # SEARCH FOR OR
@@ -104,11 +102,13 @@ def test():
                 and_parse_symptoms = symptom.split(" AND ")
 
                 disease_list_and, curing_drug_list_and = {}, {}
+                side_effects_from_drug_list_drugbank_and = {}
 
                 # initiate with first element
                 symp = and_parse_symptoms[0].lower()
                 disease_list_and = search_disease_from_symptom(symp, disease_list_and)
                 curing_drug_list_and = search_curing_drug_from_symtom(symp, curing_drug_list_and)
+                side_effects_from_drug_list_drugbank_and = search_side_effects_drug_from_drugbank(symp, side_effects_from_drug_list_drugbank_and)
                 content_sider_id_and = get_sider_id(symp)
 
                 and_parse_symptoms = and_parse_symptoms[1:]
@@ -120,17 +120,20 @@ def test():
                     # search from empty dict
                     disease_list_new = search_disease_from_symptom(symp, {})
                     curing_drug_list_new = search_curing_drug_from_symtom(symp, {})
+                    side_effects_from_drug_list_drugbank_new = search_side_effects_drug_from_drugbank(symp, {})
                     content_sider_id_new = get_sider_id(symp)
 
                     # concatenation
                     disease_list_and = concat_dict_AND(disease_list_and, disease_list_new)
                     curing_drug_list_and = concat_dict_AND(curing_drug_list_and, curing_drug_list_new)
+                    side_effects_from_drug_list_drugbank_and = concat_dict_AND(side_effects_from_drug_list_drugbank_and, side_effects_from_drug_list_drugbank_new)
                     content_sider_id_and = [value for value in content_sider_id_and if value in content_sider_id_new]
 
                 # concatenate with global dict
 
                 disease_list = concat_dict_OR(disease_list, disease_list_and)
                 curing_drug_list = concat_dict_OR(curing_drug_list, curing_drug_list_and)
+                side_effects_from_drug_list_drugbank = concat_dict_OR(side_effects_from_drug_list_drugbank, side_effects_from_drug_list_drugbank_and)
                 content_sider_id = list(set(content_sider_id + content_sider_id_and))
 
             # search for side effects with all id
@@ -139,6 +142,9 @@ def test():
             content_id_start+=5
 
             side_effects_from_drug_list = search_side_effects_drug_from_content_sider_id(content_sider_id[content_id_start:content_id_start+M], side_effects_from_drug_list)
+
+            # CONCATENATE WITH DRUGS ON DRUGBANK
+            side_effects_from_drug_list = concat_dict_OR(side_effects_from_drug_list, side_effects_from_drug_list_drugbank)
 
             count_disease_list, count_curing_drug_list, count_side_effects_from_drug_list = len(disease_list), len(curing_drug_list), len(side_effects_from_drug_list)
 
