@@ -7,7 +7,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Hurry my drug &mdash; lol </title>
+	<title>Hurry my drug </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
@@ -51,161 +51,6 @@
 	<link rel="stylesheet" id="theme-switch" href="static/css/style.css">
 	<!-- End demo purposes only -->
 
-	<style>
-
-	/* For demo purpose only */
-
-	/*
-	GREEN
-	8dc63f
-	RED
-	FA5555
-	TURQUOISE
-	27E1CE
-	BLUE 
-	2772DB
-	ORANGE
-	FF7844
-	YELLOW
-	FCDA05
-	PINK
-	F64662
-	PURPLE
-	7045FF
-
-	*/
-	
-	/* For Demo Purposes Only ( You can delete this anytime :-) */
-	#colour-variations {
-		padding: 10px;
-		-webkit-transition: 0.5s;
-	  	-o-transition: 0.5s;
-	  	transition: 0.5s;
-		width: 140px;
-		position: fixed;
-		left: 0;
-		top: 100px;
-		z-index: 999999;
-		background: #fff;
-		/*border-radius: 4px;*/
-		border-top-right-radius: 4px;
-		border-bottom-right-radius: 4px;
-		-webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-		-moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-		-ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-		box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-	}
-	#colour-variations.sleep {
-		margin-left: -140px;
-	}
-	#colour-variations h3 {
-		text-align: center;;
-		font-size: 11px;
-		letter-spacing: 2px;
-		text-transform: uppercase;
-		color: #777;
-		margin: 0 0 10px 0;
-		padding: 0;;
-	}
-
-	#colour-variations ul,
-	#colour-variations ul li {
-		padding: 0;
-		margin: 0;
-	}
-	#colour-variations ul {
-		margin-bottom: 20px;
-		float: left;	
-	}
-	#colour-variations li {
-		list-style: none;
-		display: inline;
-	}
-	#colour-variations li a {
-		width: 20px;
-		height: 20px;
-		position: relative;
-		float: left;
-		margin: 5px;
-	}
-
-
-
-	#colour-variations li a[data-theme="style"] {
-		background: #8dc63f;
-	}
-	#colour-variations li a[data-theme="red"] {
-		background: #FA5555;
-	}
-	#colour-variations li a[data-theme="turquoise"] {
-		background: #27E1CE;
-	}
-	#colour-variations li a[data-theme="blue"] {
-		background: #2772DB;
-	}
-	#colour-variations li a[data-theme="orange"] {
-		background: #FF7844;
-	}
-	#colour-variations li a[data-theme="yellow"] {
-		background: #FCDA05;
-	}
-	#colour-variations li a[data-theme="pink"] {
-		background: #F64662;
-	}
-	#colour-variations li a[data-theme="purple"] {
-		background: #7045FF;
-	}
-
-	#colour-variations a[data-layout="boxed"],
-	#colour-variations a[data-layout="wide"] {
-		padding: 2px 0;
-		width: 48%;
-		border: 1px solid #ededed;
-		text-align: center;
-		color: #777;
-		display: block;
-	}
-	#colour-variations a[data-layout="boxed"]:hover,
-	#colour-variations a[data-layout="wide"]:hover {
-		border: 1px solid #777;
-	}
-	#colour-variations a[data-layout="boxed"] {
-		float: left;
-	}
-	#colour-variations a[data-layout="wide"] {
-		float: right;
-	}
-
-	.option-toggle {
-		position: absolute;
-		right: 0;
-		top: 0;
-		margin-top: 5px;
-		margin-right: -30px;
-		width: 30px;
-		height: 30px;
-		background: #8dc63f;
-		text-align: center;
-		border-top-right-radius: 4px;
-		border-bottom-right-radius: 4px;
-		color: #fff;
-		cursor: pointer;
-		-webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-		-moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-		-ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-		box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
-	}
-	.option-toggle i {
-		top: 2px;
-		position: relative;
-	}
-	.option-toggle:hover, .option-toggle:focus, .option-toggle:active {
-		color:  #fff;
-		text-decoration: none;
-		outline: none;
-	}
-	</style>
-	<!-- End demo purposes only -->
 
 
 	<!-- Modernizr JS -->
@@ -262,7 +107,7 @@
 						-->
 						<div class="fh5co-left-position">
 							<h2 class="animate-box">Symptoms </h2>
-							<form action="/test" method="get">
+							<form action="/" method="get">
 								<div class="row">
 									{{ render_field(FormQuery.query, class="form-control") }}
 									<p><input type="submit" value="Query"></p>
@@ -285,7 +130,6 @@
 			<section id="sectionDiseases" data-bs-spy="scroll">
 				<div class="container">
 					<div class="row row-bottom-padded-md">
-						<img src="static/images/img_disease.jpg" alt="image", width="300", height="300">
 						<div class="col-md-6 col-md-offset-3 text-center">
 							<h2 class="fh5co-lead animate-box">Disease</h2>
 							<p class="fh5co-sub-lead animate-box"> Here are the diseases that matchs your symptom. </p>
@@ -306,8 +150,8 @@
 							<li>
 								<p> There are {{count_disease_list}} results </p>
 								{% if count_disease_list != 0 %}
-								<div style="overflow-y: scroll; height:400px">
-									<table class="table table-striped">
+								<div style="overflow-y: scroll; height:600px">
+								    <table class="header-fixed3" id="customers">
 										<thead>
 											<tr>
 												<th> Disease name </th>
@@ -338,7 +182,6 @@
 				<div class="container">
 					<div class="row text-center row-bottom-padded-md">
 						<div class="col-md-8 col-md-offset-2">
-							<figure class="fh5co-devices animate-box"><img src="static/images/img_devices.png" alt="" class="img-responsive"></figure>
 							<h2 class="fh5co-lead animate-box">Drugs to use</h2>
 							<p class="fh5co-sub-lead animate-box">Here are the drugs that may heal you.</p>
 						</div>
@@ -353,9 +196,9 @@
 						<li>
 							<p> There are {{count_curing_drug_list}} results </p>
 							{% if count_curing_drug_list != 0 %}
-							<div style="overflow-y: scroll; height:400px">
-								<table class="table table-striped">
-									<thead>
+							<div style="overflow-y: scroll; height:600px">
+                            	<table class="header-fixed" id="customers">
+                                    <thead>
 										<tr>
 											<th> drug_name </th>
 											<th> occurrence </th>
@@ -388,26 +231,29 @@
 			<!-- END Section Drugs -->
 
 			<section id="sectionSideEffects">
-				<div class="container">
-					<div class="row row-bottom-padded-sm">
-						<img src="static/images/img_sideEffects.jpg" alt="image">
-						<div class="col-md-6 col-md-offset-3 text-center">
-							<h2 class="fh5co-lead animate-box">Side effects </h2>
+                <div class="container">
+					<div class="row text-center row-bottom-padded-md">
+						<div class="col-md-8 col-md-offset-2">
+							<h2 class="fh5co-lead animate-box">Side effects</h2>
 							<p class="fh5co-sub-lead animate-box">Here are the drugs that might cause you this symptom.</p>
 						</div>
 					</div>
 				</div>
 				<div class="flexslider">
 					<b>
-						<input id="searchSideEffects" type="text"
-							   placeholder="Search here">
-					</b>
+                        <input id="searchSideEffects" type="text"
+                           placeholder="Search here">
+                        <form action="/" method="post">
+                            <button type="submit">add</button>
+                        </form>
+                    </b>
+
 					<ul class="slides">
 						<li>
 							<p> There are {{count_side_effects_from_drug_list}} results </p>
 							{% if count_side_effects_from_drug_list != 0 %}
-							<div style="overflow-y: scroll; height:400px">
-								<table class="table table-striped">
+							<div style="overflow-y: auto; height:600px">
+								<table class="header-fixed" id="customers">
 									<thead>
 										<tr>
 											<th> drug_name </th>
@@ -440,12 +286,6 @@
 			</section>
 			<!-- END section Side Effects -->
 
-            <form action="/test" method="post">
-                <div class="row">
-                    <button type="submit">plus</button>
-                </div>
-            </form>
-			<h3>{{n}}</h3>
 		{% endif %}
 
 

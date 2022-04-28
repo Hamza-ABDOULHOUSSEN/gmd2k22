@@ -11,7 +11,7 @@ side_effects_from_drug_list_drugbank = {}
 content_sider_id = []
 content_id_start = 0
 
-@app.route('/', methods = ["GET"])
+@app.route('/index', methods = ["GET"])
 def index():
     return render_template("index.html")
 
@@ -54,7 +54,7 @@ def requete():
     content = drugbank_query(query)
     return render_template("requete.html", content=content)
 
-@app.route('/test', methods = ["GET", "POST"])
+@app.route('/', methods = ["GET", "POST"])
 def test():
     FormQuery = forms.FormQuery(request.form)
     arguments = request.args
