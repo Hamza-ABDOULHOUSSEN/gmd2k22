@@ -98,13 +98,43 @@ def test():
 
             for symptom in symptoms:
 
-                symptom = symptom.lower()
+                print(symptom)
 
-                disease_list = search_disease_from_symptom(symptom, disease_list)
-                curing_drug_list = search_curing_drug_from_symtom(symptom, curing_drug_list)
+                # SEARCH FOR AND
+                and_parse_symptoms = symptom.split(" AND ")
 
-                content_sider_id_new = get_sider_id(symptom)
-                content_sider_id = list(set(content_sider_id + content_sider_id_new))
+                disease_list_and, curing_drug_list_and = {}, {}
+
+                # initiate with first element
+                symp = and_parse_symptoms[0].lower()
+                print(symp)
+                disease_list_and = search_disease_from_symptom(symp, disease_list_and)
+                curing_drug_list_and = search_curing_drug_from_symtom(symp, curing_drug_list_and)
+                content_sider_id_and = get_sider_id(symp)
+
+                and_parse_symptoms = and_parse_symptoms[1:]
+
+                for symp in and_parse_symptoms:
+                    print(symp)
+
+                    symp = symp.lower()
+
+                    # search from empty dict
+                    disease_list_new = search_disease_from_symptom(symp, {})
+                    curing_drug_list_new = search_curing_drug_from_symtom(symp, {})
+                    content_sider_id_new = get_sider_id(symp)
+
+                    # concatenation
+                    disease_list_and = concat_dict_AND(disease_list_and, disease_list_new)
+                    curing_drug_list_and = concat_dict_AND(curing_drug_list_and, curing_drug_list_new)
+                    content_sider_id_and = [value for value in content_sider_id_and if value in content_sider_id_new]
+
+                # concatenate with global dict
+
+                disease_list = concat_dict_OR(disease_list, disease_list_and)
+                curing_drug_list = concat_dict_OR(curing_drug_list, curing_drug_list_and)
+                print(len(disease_list))
+                content_sider_id = list(set(content_sider_id + content_sider_id_and))
 
             # search for side effects with all id
             content_id_start = 0
