@@ -98,8 +98,6 @@ def test():
 
             for symptom in symptoms:
 
-                print(symptom)
-
                 # SEARCH FOR AND
                 and_parse_symptoms = symptom.split(" AND ")
 
@@ -107,7 +105,6 @@ def test():
 
                 # initiate with first element
                 symp = and_parse_symptoms[0].lower()
-                print(symp)
                 disease_list_and = search_disease_from_symptom(symp, disease_list_and)
                 curing_drug_list_and = search_curing_drug_from_symtom(symp, curing_drug_list_and)
                 content_sider_id_and = get_sider_id(symp)
@@ -115,7 +112,6 @@ def test():
                 and_parse_symptoms = and_parse_symptoms[1:]
 
                 for symp in and_parse_symptoms:
-                    print(symp)
 
                     symp = symp.lower()
 
@@ -133,7 +129,6 @@ def test():
 
                 disease_list = concat_dict_OR(disease_list, disease_list_and)
                 curing_drug_list = concat_dict_OR(curing_drug_list, curing_drug_list_and)
-                print(len(disease_list))
                 content_sider_id = list(set(content_sider_id + content_sider_id_and))
 
             # search for side effects with all id
