@@ -63,7 +63,7 @@ SIDER_FILE = "../data/MEDDRAS/meddra_all_se.csv"
 
 def get_sider_id(symptom):
     content = []
-    df = pd.read_csv(SIDER_FILE, sep=',', on_bad_lines='skip')
+    df = pd.read_csv(SIDER_FILE, sep=',')
     n = len(df)
 
     for k in range(n):
