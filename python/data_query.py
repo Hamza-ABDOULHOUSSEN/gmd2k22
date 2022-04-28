@@ -70,7 +70,7 @@ def get_sider_id(symptom):
         if symptom in df['side_effect_name'][k].lower():
             id1 = df['stitch_compound_id1'][k]
             id2 = df['stitch_compound_id2'][k]
-            content.append([id1, id2])
+            content.append((id1, id2))
 
     return content
 
@@ -108,7 +108,6 @@ def search_disease_from_symptom(symptom, disease_list):
     disease_list = dict(sorted(disease_list.items(), key=lambda item: item[1], reverse=True))
 
     return disease_list
-
 
 def search_side_effects_drug_from_content_sider_id(content_sider_id, side_effects_from_drug_list):
 

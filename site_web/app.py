@@ -65,6 +65,9 @@ def test():
     global disease_list, curing_drug_list, side_effects_from_drug_list
     global content_sider_id
 
+    # [value for value in lst1 if value in lst2]
+    # list(set(l1+l2))
+
     if request.method == 'POST':
         query = "pas none"
         M = min(content_id_start + 5, len(content_sider_id))
@@ -83,21 +86,28 @@ def test():
                                side_effects_from_drug_list=side_effects_from_drug_list
                                )
 
-
     else:
         if len(arguments) != 0:
             query = arguments["query"]
-            symptom = query.lower()
 
             disease_list, curing_drug_list, side_effects_from_drug_list = {}, {}, {}
             content_sider_id = []
 
-            disease_list = search_disease_from_symptom(symptom, disease_list)
-            curing_drug_list = search_curing_drug_from_symtom(symptom, curing_drug_list)
+            # SEARCH FOR OR
+            symptoms = query.split(" OR ")
 
-            content_sider_id = get_sider_id(symptom)
+            for symptom in symptoms:
+
+                symptom = symptom.lower()
+
+                disease_list = search_disease_from_symptom(symptom, disease_list)
+                curing_drug_list = search_curing_drug_from_symtom(symptom, curing_drug_list)
+
+                content_sider_id_new = get_sider_id(symptom)
+                content_sider_id = list(set(content_sider_id + content_sider_id_new))
+
+            # search for side effects with all id
             content_id_start = 0
-
             M = min(content_id_start+5, len(content_sider_id))
             content_id_start+=5
 
@@ -116,7 +126,4 @@ def test():
 
 
 if __name__ == '__main__':
-    app.run()
-    query = "\"id : DB0000*\""
-    content = drugbank_query(query)
-    print(str(content))
+    app.run(debug=True)
